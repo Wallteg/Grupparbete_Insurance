@@ -23,7 +23,7 @@ namespace Grupparbete_Insurance
             //Connection med Sql server, databas Insurance.
             SqlConnection conn = new SqlConnection();
             
-            conn.ConnectionString = "Data Source = DESKTOP - 0KMEDJA\\SQL2017; Initial Catalog = Insurance; Integrated Security = True";
+            conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
 
             try
             {
@@ -40,10 +40,10 @@ namespace Grupparbete_Insurance
                 string job;
                 string marital;
                 string education;
-                bool credit;
+                int credit; // bool?
                 int balance;
-                bool homeInsurance;
-                bool carLoan;
+                int homeInsurance; // bool?
+                int carLoan;  // bool?
                 string communication;
                 int lastContactDay;
                 string lastContactMonth;
@@ -53,33 +53,29 @@ namespace Grupparbete_Insurance
                 string outcome;
                 TimeSpan callStart;
                 TimeSpan callEnd;
-                bool carInsurance;
+                int carInsurance; // bool?
 
                 while (myReader.Read())
                 {
                     id = (int)myReader["id"];
                     age = (int)myReader["age"];
                     job = myReader["job"].ToString();
-                    marital = myReader["martial"].ToString();
+                    marital = myReader["marital"].ToString();
                     education = myReader["education"].ToString();
-                    if ((int)myReader["default"] == 1)
-                    {
-                        credit = true;
-                    }
-                    else
-                    {
-                        credit = false;
-                    }
+                    credit = (int)myReader["default"];
                     balance = (int)myReader["balance"];
-                    if ((int)myReader["HHInsurance"] == 1)
-                    {
-                        homeInsurance = true;
-                    }
-                    else
-                    {
-                        homeInsurance = false;
-                    }
-
+                    homeInsurance = (int)myReader["hhinsurance"];
+                    carLoan = (int)myReader["carloan"];
+                    communication = myReader["communication"].ToString();
+                    lastContactDay = (int)myReader["lastcontactday"];
+                    lastContactMonth = myReader["lastcontactmonth"].ToString();
+                    noOfContacts = (int)myReader["noofcontacts"];
+                    daysPassed = (int)myReader["dayspassed"];
+                    prevAttemts = (int)myReader["prevattempts"];
+                    outcome = myReader["outcome"].ToString();
+                    callStart = (TimeSpan)myReader["callstart"];
+                    callEnd = (TimeSpan)myReader["callend"];
+                    carInsurance = (int)myReader["carinsurance"];
 
                 }
 
