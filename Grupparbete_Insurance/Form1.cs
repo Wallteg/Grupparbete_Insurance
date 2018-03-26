@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms.DataVisualization;
 
 namespace Grupparbete_Insurance
 {
@@ -34,16 +35,18 @@ namespace Grupparbete_Insurance
 
                 SqlDataReader myReader = myQuery.ExecuteReader();
 
+                 
+
                 //Vi inleder med att deklarera våra olika variabler som vi har att tillgå från SQL server
                 int id;
                 int age;
                 string job;
                 string marital;
                 string education;
-                int credit; // bool?
+                int credit; // bool?    1 true 0 false
                 int balance;
-                int homeInsurance; // bool?
-                int carLoan;  // bool?
+                int homeInsurance; // bool?     1 true 0 false
+                int carLoan;  // bool?      1 true 0 false
                 string communication;
                 int lastContactDay;
                 string lastContactMonth;
@@ -53,10 +56,12 @@ namespace Grupparbete_Insurance
                 string outcome;
                 TimeSpan callStart;
                 TimeSpan callEnd;
-                int carInsurance; // bool?
+                int carInsurance; // bool?   1 true 0 false  
+
 
                 while (myReader.Read())
                 {
+
                     id = (int)myReader["id"];
                     age = (int)myReader["age"];
                     job = myReader["job"].ToString();
@@ -77,6 +82,11 @@ namespace Grupparbete_Insurance
                     callEnd = (TimeSpan)myReader["callend"];
                     carInsurance = (int)myReader["carinsurance"];
 
+
+                    Customer customer = new Customer(id, age, job, marital, education, credit, balance,
+                        homeInsurance, carLoan, communication, lastContactDay, lastContactMonth, noOfContacts,
+                        daysPassed, prevAttemts, outcome, callStart, callEnd, carInsurance);
+
                 }
 
             }
@@ -88,6 +98,13 @@ namespace Grupparbete_Insurance
             {
                 conn.Close();
             }
+
+
+            foreach (Customer C in collection)
+            {
+                chart1.Series["Series"].Points.AddY();
+            }
+
         }
 
     }
