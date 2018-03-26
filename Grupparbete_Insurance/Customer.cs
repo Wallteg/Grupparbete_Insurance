@@ -28,7 +28,7 @@ namespace Grupparbete_Insurance
         public TimeSpan callStart { get; set; }
         public TimeSpan callEnd { get; set; }
         public int carInsurance { get; set; }
-       // public List<Customer> customer { get; } = new List<Customer>();
+       
 
         public Customer(
             int id, 
@@ -49,8 +49,7 @@ namespace Grupparbete_Insurance
             string outcome, 
             TimeSpan callStart, 
             TimeSpan callEnd, 
-            int carInsurance,
-           // List<Customer> customer
+            int carInsurance
             )
         {
             Id = id;
@@ -72,7 +71,6 @@ namespace Grupparbete_Insurance
             this.callStart = callStart;
             this.callEnd = callEnd;
             this.carInsurance = carInsurance;
-           // Customer = customer;
         }
     }
 }
