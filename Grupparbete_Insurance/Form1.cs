@@ -60,7 +60,7 @@ namespace Grupparbete_Insurance
                 string outcome;
                 TimeSpan callStart;
                 TimeSpan callEnd;
-                int carInsurance; // bool?   1 true 0 false  
+                int carInsurance; // bool?   1 true 0 false
 
 
                 while (myReader.Read())
@@ -129,20 +129,26 @@ namespace Grupparbete_Insurance
                             orderby newGroup.Key
                             select newGroup;
 
-           /*oreach (var nameGroup in hejMomina)
+           /*
+             Foreach (var nameGroup in hejMomina)
             {
                 
                 foreach (var Customer in nameGroup)
                 {
                     chart1.Series["Series1"].Points.AddXY(Customer.age, Customer.balance);
                 }
-            }*/
-
-            for (int i = 17; i < 90; i++)
-            {
-                var q = customerList.Where(y => y.age == i);
-                chart1.Series["Series1"].Points.AddXY(i, q.Count());
             }
+            */
+
+            
+            
+           for (int i = 17; i < 95; i++) // Plockar ut ålder, grupperar och räknar antalet.
+           {
+                var q = customerList.Where(y => y.age == i && y.carInsurance == 1);
+                chart1.Series["Series1"].Points.AddXY(i, q.Count());
+           }
+
+
             /*
             foreach (Customer c in customerList.Where(y => y.carInsurance == 1))
             {

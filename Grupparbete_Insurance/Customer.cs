@@ -28,7 +28,8 @@ namespace Grupparbete_Insurance
         public TimeSpan callStart { get; set; }
         public TimeSpan callEnd { get; set; }
         public int carInsurance { get; set; }
-       
+
+        
 
         public Customer(
             int id, 
