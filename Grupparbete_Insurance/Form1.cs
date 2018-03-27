@@ -107,14 +107,17 @@ namespace Grupparbete_Insurance
 
 
 
-            /*var query = from r in customerList
+            /*
+              var query = from r in customerList
                         group r by r.age - (r.age % 10) into r
                         select new
                         {
                             Range = r.Key,
                             Count = r.Count()
                         }; */
-                        /*
+                        
+            
+            /*
             foreach(var x in Query)
 
             {
@@ -142,12 +145,25 @@ namespace Grupparbete_Insurance
 
             
             
-           for (int i = 17; i < 95; i++) // Plockar ut ålder, grupperar och räknar antalet.
+           for (int i = 17; i <= 90; i++) // Plockar ut ålder, grupperar och räknar antalet.
            {
-                var q = customerList.Where(y => y.age == i && y.carInsurance == 1);
-                chart1.Series["Series1"].Points.AddXY(i, q.Count());
+                var ins = customerList.Where(y => y.age == i && y.carInsurance == 1);
+                //var byage = customerList.GroupBy(y => y.age);
+                chart1.Series["Series2"].Points.AddXY(i, ins.Count());
+
+                var noIns = customerList.Where(y => y.age == i && y.carInsurance == 0);
+                chart1.Series["Series1"].Points.AddXY(i, noIns.Count());
            }
 
+           
+
+            /*   foreach (Customer c in customerList)
+               {
+                   var q = customerList.Where(y => y.carInsurance == 1);
+                   chart1.Series["Series1"].Points.AddXY(c.education, q.Count());
+
+               };
+                  */
 
             /*
             foreach (Customer c in customerList.Where(y => y.carInsurance == 1))
@@ -155,13 +171,18 @@ namespace Grupparbete_Insurance
                 chart1.Series["Series1"].Points.AddXY(c.age,c.);
             } 
             */
-            chart1.Series["Series1"].ChartType = SeriesChartType.Column;
-            chart1.Titles.Add("Age");
-            chart1.ChartAreas[0].AxisY.Title = "Balance";
+            chart1.Series["Series1"].ChartType = SeriesChartType.Line;
+            chart1.Series["Series2"].ChartType = SeriesChartType.Line;
+            chart1.Titles.Add("Spridning av kundersålder och koppling till om dem har eller inte har försäkring");
+            chart1.ChartAreas[0].AxisY.Title = "Antal";
             chart1.ChartAreas[0].AxisX.Title = "Ålder";
+            chart1.Series["Series1"].BorderWidth = 5;
+            chart1.Series["Series2"].BorderWidth = 5;
             
+
+
+            //   chart1.DataManipulator.GroupByAxisLabel("Antal", "age");
             
-           //   chart1.DataManipulator.GroupByAxisLabel("Antal", "age");
 
         }
 
