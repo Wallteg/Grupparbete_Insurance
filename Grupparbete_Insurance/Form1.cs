@@ -189,7 +189,7 @@ namespace Grupparbete_Insurance
             }
         
 */
-            var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
+    /*        var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
 
         int totalCount = groups.Sum(g => g.Count());
 
@@ -213,7 +213,7 @@ namespace Grupparbete_Insurance
             chart2.ChartAreas[0].AxisY.Title = "Antal i procent";
             chart2.ChartAreas[0].AxisX.Title = "Ålder";
             chart2.Series["Series1"].BorderWidth = 5;
-            
+
 
             //Series serice1 = chart1.Series["Series1"]; // Hämtar serien från diagramet
             //serice1.Points.AddXY("0 - 25", countUppTill25);
@@ -223,7 +223,63 @@ namespace Grupparbete_Insurance
             //serice1.Points.AddXY("51 - 65", count51Till65);
             //serice1.Points.AddXY("66+", count66OchAldre);
 
+    */
+            
+            // CALLES DEL FÖR ATT FÅ FRAM JOB / PROCENT
 
+            var jobs = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
+
+            int totalCounts = jobs.Sum(j => j.Count());
+
+            int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
+            int technician = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
+            int bluecollar = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
+            int admin = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
+            int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
+            int services = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
+            int selfemployed = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
+            int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
+            int unemployed = jobs.Where(j => j.Key == "unemployed").Sum(j => j.Count());
+            int entrepreneur = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
+            int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
+
+
+
+            Series series1 = chart2.Series["Series1"]; // Hämtar serien från diagramet
+            series1.Points.AddXY("management", ((decimal)management / totalCounts) * 100);
+            series1.Points.AddXY("technician", ((decimal)technician / totalCounts) * 100);
+            series1.Points.AddXY("bluecollar", ((decimal)bluecollar / totalCounts) * 100);
+            series1.Points.AddXY("admin", ((decimal)admin / totalCounts) * 100);
+            series1.Points.AddXY("retired", ((decimal)retired / totalCounts) * 100);
+            series1.Points.AddXY("services", ((decimal)services / totalCounts) * 100);
+            series1.Points.AddXY("selfemployed", ((decimal)selfemployed / totalCounts) * 100);
+            series1.Points.AddXY("student", ((decimal)student / totalCounts) * 100);
+            series1.Points.AddXY("unemployed", ((decimal)unemployed / totalCounts) * 100);
+            series1.Points.AddXY("entrepreneur", ((decimal)entrepreneur / totalCounts) * 100);
+            series1.Points.AddXY("housemaid", ((decimal)housemaid / totalCounts) * 100);
+
+
+
+            // SOFIAS DEL OM MARTIAL
+            /*
+            var Marital = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.marital).OrderBy(m => m.Key).ToList();
+            int totalCount1 = Marital.Sum(m => m.Count());
+
+            int maried = Marital.Where(m => m.Key == "married").Sum(m => m.Count());
+            int single = Marital.Where(m => m.Key == "single").Sum(m => m.Count());
+            int divorced = Marital.Where(m => m.Key == "divorced").Sum(m => m.Count());
+
+            Series serice1 = chart2.Series["Series1"]; // Hämtar serien från diagramet
+            serice1.Points.AddXY("married", ((decimal)maried / totalCount1) * 100);
+            serice1.Points.AddXY("single", ((decimal)single / totalCount1) * 100);
+            serice1.Points.AddXY("divorced", ((decimal)divorced / totalCount1) * 100);
+
+            chart2.Series["Series1"].ChartType = SeriesChartType.RangeColumn;
+            chart2.Titles.Add("Procentuell");
+            chart2.ChartAreas[0].AxisY.Title = "Antal i procent";
+            chart2.ChartAreas[0].AxisX.Title = "Civilstatus";
+            chart2.Series["Series1"].BorderWidth = 5;
+            */
         }
 
     }
