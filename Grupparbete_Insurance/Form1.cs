@@ -155,7 +155,7 @@ namespace Grupparbete_Insurance
                 chart1.Series["Series1"].Points.AddXY(i, noIns.Count());
            }
 
-           
+
 
             /*   foreach (Customer c in customerList)
                {
@@ -181,50 +181,50 @@ namespace Grupparbete_Insurance
 
 
 
-            
-/*
-            foreach (var Customer in nameGroup)
-            {
-                chart1.Series["Series1"].Points.AddXY(Customer.age, Customer.balance);
-            }
-        
-*/
-    /*        var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
 
-        int totalCount = groups.Sum(g => g.Count());
+            /*
+                        foreach (var Customer in nameGroup)
+                        {
+                            chart1.Series["Series1"].Points.AddXY(Customer.age, Customer.balance);
+                        }
 
-        int countUppTill25 = groups.Where(g => g.Key <= 25).Sum(g => g.Count());
-        int count26Till32 = groups.Where(g => g.Key >= 26 && g.Key <= 32).Sum(g => g.Count());
-        int count33Till40 = groups.Where(g => g.Key >= 33 && g.Key <= 40).Sum(g => g.Count());
-        int count41Till50 = groups.Where(g => g.Key >= 41 && g.Key <= 50).Sum(g => g.Count());
-        int count51Till65 = groups.Where(g => g.Key >= 51 && g.Key <= 65).Sum(g => g.Count());
-        int count66OchAldre = groups.Where(g => g.Key >= 66).Sum(g => g.Count());
+            */
+            /*        var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
 
-        Series serice1 = chart2.Series["Series1"]; // Hämtar serien från diagramet
-        serice1.Points.AddXY("0 - 25", ((decimal) countUppTill25 / totalCount) * 100);
-            serice1.Points.AddXY("26 - 32", ((decimal) count26Till32 / totalCount) * 100);
-            serice1.Points.AddXY("33 - 40", ((decimal) count33Till40 / totalCount) * 100);
-            serice1.Points.AddXY("41 - 50", ((decimal) count41Till50 / totalCount) * 100);
-            serice1.Points.AddXY("51 - 65", ((decimal) count51Till65 / totalCount) * 100);
-            serice1.Points.AddXY("66+", ((decimal) count66OchAldre / totalCount) * 100);
+                int totalCount = groups.Sum(g => g.Count());
 
-            chart2.Series["Series1"].ChartType = SeriesChartType.RangeColumn;
-            chart2.Titles.Add("Procentuell");
-            chart2.ChartAreas[0].AxisY.Title = "Antal i procent";
-            chart2.ChartAreas[0].AxisX.Title = "Ålder";
-            chart2.Series["Series1"].BorderWidth = 5;
+                int countUppTill25 = groups.Where(g => g.Key <= 25).Sum(g => g.Count());
+                int count26Till32 = groups.Where(g => g.Key >= 26 && g.Key <= 32).Sum(g => g.Count());
+                int count33Till40 = groups.Where(g => g.Key >= 33 && g.Key <= 40).Sum(g => g.Count());
+                int count41Till50 = groups.Where(g => g.Key >= 41 && g.Key <= 50).Sum(g => g.Count());
+                int count51Till65 = groups.Where(g => g.Key >= 51 && g.Key <= 65).Sum(g => g.Count());
+                int count66OchAldre = groups.Where(g => g.Key >= 66).Sum(g => g.Count());
+
+                Series serice1 = chart2.Series["Series1"]; // Hämtar serien från diagramet
+                serice1.Points.AddXY("0 - 25", ((decimal) countUppTill25 / totalCount) * 100);
+                    serice1.Points.AddXY("26 - 32", ((decimal) count26Till32 / totalCount) * 100);
+                    serice1.Points.AddXY("33 - 40", ((decimal) count33Till40 / totalCount) * 100);
+                    serice1.Points.AddXY("41 - 50", ((decimal) count41Till50 / totalCount) * 100);
+                    serice1.Points.AddXY("51 - 65", ((decimal) count51Till65 / totalCount) * 100);
+                    serice1.Points.AddXY("66+", ((decimal) count66OchAldre / totalCount) * 100);
+
+                    chart2.Series["Series1"].ChartType = SeriesChartType.RangeColumn;
+                    chart2.Titles.Add("Procentuell");
+                    chart2.ChartAreas[0].AxisY.Title = "Antal i procent";
+                    chart2.ChartAreas[0].AxisX.Title = "Ålder";
+                    chart2.Series["Series1"].BorderWidth = 5;
 
 
-            //Series serice1 = chart1.Series["Series1"]; // Hämtar serien från diagramet
-            //serice1.Points.AddXY("0 - 25", countUppTill25);
-            //serice1.Points.AddXY("26 - 32", count26Till32);
-            //serice1.Points.AddXY("33 - 40", count33Till40);
-            //serice1.Points.AddXY("41 - 50", count41Till50);
-            //serice1.Points.AddXY("51 - 65", count51Till65);
-            //serice1.Points.AddXY("66+", count66OchAldre);
+                    //Series serice1 = chart1.Series["Series1"]; // Hämtar serien från diagramet
+                    //serice1.Points.AddXY("0 - 25", countUppTill25);
+                    //serice1.Points.AddXY("26 - 32", count26Till32);
+                    //serice1.Points.AddXY("33 - 40", count33Till40);
+                    //serice1.Points.AddXY("41 - 50", count41Till50);
+                    //serice1.Points.AddXY("51 - 65", count51Till65);
+                    //serice1.Points.AddXY("66+", count66OchAldre);
 
-    */
-            
+            */
+
             // CALLES DEL FÖR ATT FÅ FRAM JOB / PROCENT
 
             var jobs = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
@@ -280,8 +280,82 @@ namespace Grupparbete_Insurance
             chart2.ChartAreas[0].AxisX.Title = "Civilstatus";
             chart2.Series["Series1"].BorderWidth = 5;
             */
-        }
 
+           
+            // Marcus Lösning för chart med procent, baserat på Utbildning.
+          /*  var edu = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.education).OrderBy(ed => ed.Key).ToList();
+            var edu1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.education).OrderBy(ed1 => ed1.Key).ToList();
+            int totalCount2 = edu.Sum(ed => ed.Count());
+            int totalCount3 = edu1.Sum(ed1 => ed1.Count());
+
+            int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
+            int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
+            int secondary = edu.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
+            int tertiary = edu.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
+
+            Series series3 = chart2.Series["Series1"]; // Hämtar serien från diagramet
+
+            series3.Points.AddXY("NA", ((decimal)NA / totalCount2) * 100);
+            series3.Points.AddXY("primary", ((decimal)primary / totalCount2) * 100);
+            series3.Points.AddXY("secondary", ((decimal)secondary / totalCount2) * 100);
+            series3.Points.AddXY("tertiary", ((decimal)tertiary / totalCount2) * 100);
+
+            Series series4 = chart2.Series["Series2"]; // Hämtar serien från diagramet
+
+            series4.Points.AddXY("NA", ((decimal)NA / totalCount3) * 100);
+            series4.Points.AddXY("primary", ((decimal)primary / totalCount3) * 100);
+            series4.Points.AddXY("secondary", ((decimal)secondary / totalCount3) * 100);
+            series4.Points.AddXY("tertiary", ((decimal)tertiary / totalCount3) * 100); */
+
+
+        }
+       /* public void metod1()
+        {
+            SqlConnection conn = new SqlConnection();
+
+            conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
+
+            List<Customer> jobList = new List<Customer>();
+
+           conn.Open(); // öppna kopplingen
+
+            // Vi vill komma åt tabellen Car_Insurance som innehåller vår data.
+            SqlCommand myQuery = new SqlCommand("SELECT * FROM Car_Insurance;", connection: conn);
+
+            SqlDataReader myReader = myQuery.ExecuteReader();
+
+
+            string job;
+
+            while (myReader.Read())
+            {
+                
+                job = myReader["job"].ToString();
+
+                jobList.Add();
+            }
+
+            var jobs = jobList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
+
+            int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
+            int technician = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
+            int bluecollar = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
+            int admin = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
+            int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
+            int services = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
+            int selfemployed = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
+            int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
+            int unemployed = jobs.Where(j => j.Key == "unemployed").Sum(j => j.Count());
+            int entrepreneur = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
+            int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
+        } */
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            chart1.Series["Series1"].Points.Clear();
+
+            
+        }
     }
     
 }
