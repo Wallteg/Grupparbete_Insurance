@@ -25,7 +25,7 @@ namespace Grupparbete_Insurance
         {
             //Connection med Sql server, databas Insurance.
             SqlConnection conn = new SqlConnection();
-            
+
             conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
 
             List<Customer> customerList = new List<Customer>();
@@ -33,13 +33,13 @@ namespace Grupparbete_Insurance
             try
             {
                 conn.Open(); // öppna kopplingen
-                
+
                 //Vi vill komma åt tabellen Car_Insurance som innehåller vår data.
                 SqlCommand myQuery = new SqlCommand("SELECT * FROM Car_Insurance;", connection: conn);
 
                 SqlDataReader myReader = myQuery.ExecuteReader();
 
-                
+
 
                 //Vi inleder med att deklarera våra olika variabler som vi har att tillgå från SQL server
                 int id;
@@ -115,8 +115,8 @@ namespace Grupparbete_Insurance
                             Range = r.Key,
                             Count = r.Count()
                         }; */
-                        
-            
+
+
             /*
             foreach(var x in Query)
 
@@ -143,17 +143,17 @@ namespace Grupparbete_Insurance
             }
             */
 
-            
-            
-           for (int i = 17; i <= 90; i++) // Plockar ut ålder, grupperar och räknar antalet.
-           {
+
+
+            for (int i = 17; i <= 90; i++) // Plockar ut ålder, grupperar och räknar antalet.
+            {
                 var ins = customerList.Where(y => y.age == i && y.carInsurance == 1);
                 //var byage = customerList.GroupBy(y => y.age);
-                chart1.Series["Series2"].Points.AddXY(i, ins.Count());
+                chart1.Series["Have"].Points.AddXY(i, ins.Count());
 
                 var noIns = customerList.Where(y => y.age == i && y.carInsurance == 0);
-                chart1.Series["Series1"].Points.AddXY(i, noIns.Count());
-           }
+                chart1.Series["Have Not"].Points.AddXY(i, noIns.Count());
+            }
 
 
 
@@ -171,13 +171,7 @@ namespace Grupparbete_Insurance
                 chart1.Series["Series1"].Points.AddXY(c.age,c.);
             } 
             */
-            chart1.Series["Series1"].ChartType = SeriesChartType.Line;
-            chart1.Series["Series2"].ChartType = SeriesChartType.Line;
-            chart1.Titles.Add("Spridning av kundersålder och koppling till om dem har eller inte har försäkring");
-            chart1.ChartAreas[0].AxisY.Title = "Antal";
-            chart1.ChartAreas[0].AxisX.Title = "Ålder";
-            chart1.Series["Series1"].BorderWidth = 5;
-            chart1.Series["Series2"].BorderWidth = 5;
+            
 
 
 
@@ -245,7 +239,7 @@ namespace Grupparbete_Insurance
 
 
 
-            Series series1 = chart2.Series["Series1"]; // Hämtar serien från diagramet
+            Series series1 = chart2.Series["Have"]; // Hämtar serien från diagramet
             series1.Points.AddXY("management", ((decimal)management / totalCounts) * 100);
             series1.Points.AddXY("technician", ((decimal)technician / totalCounts) * 100);
             series1.Points.AddXY("bluecollar", ((decimal)bluecollar / totalCounts) * 100);
@@ -281,81 +275,141 @@ namespace Grupparbete_Insurance
             chart2.Series["Series1"].BorderWidth = 5;
             */
 
-           
+
             // Marcus Lösning för chart med procent, baserat på Utbildning.
-          /*  var edu = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.education).OrderBy(ed => ed.Key).ToList();
-            var edu1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.education).OrderBy(ed1 => ed1.Key).ToList();
-            int totalCount2 = edu.Sum(ed => ed.Count());
-            int totalCount3 = edu1.Sum(ed1 => ed1.Count());
+              var edu = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.education).OrderBy(ed => ed.Key).ToList();
+              var edu1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.education).OrderBy(ed1 => ed1.Key).ToList();
+              int totalCount2 = edu.Sum(ed => ed.Count());
+              int totalCount3 = edu1.Sum(ed1 => ed1.Count());
 
-            int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
-            int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
-            int secondary = edu.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
-            int tertiary = edu.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
+              int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
+              int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
+              int secondary = edu.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
+              int tertiary = edu.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
 
-            Series series3 = chart2.Series["Series1"]; // Hämtar serien från diagramet
+              Series series3 = chart1.Series["Series3"]; // Hämtar serien från diagramet
 
-            series3.Points.AddXY("NA", ((decimal)NA / totalCount2) * 100);
-            series3.Points.AddXY("primary", ((decimal)primary / totalCount2) * 100);
-            series3.Points.AddXY("secondary", ((decimal)secondary / totalCount2) * 100);
-            series3.Points.AddXY("tertiary", ((decimal)tertiary / totalCount2) * 100);
+              series3.Points.AddXY("NA", ((decimal)NA / totalCount2) * 100);
+              series3.Points.AddXY("primary", ((decimal)primary / totalCount2) * 100);
+              series3.Points.AddXY("secondary", ((decimal)secondary / totalCount2) * 100);
+              series3.Points.AddXY("tertiary", ((decimal)tertiary / totalCount2) * 100);
 
-            Series series4 = chart2.Series["Series2"]; // Hämtar serien från diagramet
+              Series series4 = chart1.Series["Series4"]; // Hämtar serien från diagramet
 
-            series4.Points.AddXY("NA", ((decimal)NA / totalCount3) * 100);
-            series4.Points.AddXY("primary", ((decimal)primary / totalCount3) * 100);
-            series4.Points.AddXY("secondary", ((decimal)secondary / totalCount3) * 100);
-            series4.Points.AddXY("tertiary", ((decimal)tertiary / totalCount3) * 100); */
+              series4.Points.AddXY("NA", ((decimal)NA / totalCount3) * 100);
+              series4.Points.AddXY("primary", ((decimal)primary / totalCount3) * 100);
+              series4.Points.AddXY("secondary", ((decimal)secondary / totalCount3) * 100);
+              series4.Points.AddXY("tertiary", ((decimal)tertiary / totalCount3) * 100); 
 
 
         }
-       /* public void metod1()
-        {
-            SqlConnection conn = new SqlConnection();
+        /* public void metod1()
+         {
+             SqlConnection conn = new SqlConnection();
 
-            conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
+             conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
 
-            List<Customer> jobList = new List<Customer>();
+             List<Customer> jobList = new List<Customer>();
 
-           conn.Open(); // öppna kopplingen
+            conn.Open(); // öppna kopplingen
 
-            // Vi vill komma åt tabellen Car_Insurance som innehåller vår data.
-            SqlCommand myQuery = new SqlCommand("SELECT * FROM Car_Insurance;", connection: conn);
+             // Vi vill komma åt tabellen Car_Insurance som innehåller vår data.
+             SqlCommand myQuery = new SqlCommand("SELECT * FROM Car_Insurance;", connection: conn);
 
-            SqlDataReader myReader = myQuery.ExecuteReader();
+             SqlDataReader myReader = myQuery.ExecuteReader();
 
 
-            string job;
+             string job;
 
-            while (myReader.Read())
-            {
-                
-                job = myReader["job"].ToString();
+             while (myReader.Read())
+             {
 
-                jobList.Add();
-            }
+                 job = myReader["job"].ToString();
 
-            var jobs = jobList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
+                 jobList.Add();
+             }
 
-            int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
-            int technician = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
-            int bluecollar = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
-            int admin = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
-            int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
-            int services = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
-            int selfemployed = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
-            int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
-            int unemployed = jobs.Where(j => j.Key == "unemployed").Sum(j => j.Count());
-            int entrepreneur = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
-            int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
-        } */
+             var jobs = jobList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
+
+             int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
+             int technician = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
+             int bluecollar = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
+             int admin = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
+             int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
+             int services = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
+             int selfemployed = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
+             int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
+             int unemployed = jobs.Where(j => j.Key == "unemployed").Sum(j => j.Count());
+             int entrepreneur = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
+             int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
+         } */
 
         private void button1_Click(object sender, EventArgs e)
         {
-            chart1.Series["Series1"].Points.Clear();
+            {
+                Series have = chart1.Series["Have"];
+                Series haveNot = chart1.Series["Have Not"];
 
-            
+                if (have.Enabled == true && haveNot.Enabled == true)
+                {
+                    have.Enabled = false;
+                    chart1.Titles.Clear();
+                }
+                else if (have.Enabled == false && haveNot.Enabled == true)
+                {
+                    haveNot.Enabled = false;
+                    have.Enabled = true;
+                }
+                else if (have.Enabled == true && haveNot.Enabled == false)
+                {
+                    haveNot.Enabled = false;
+                    have.Enabled = false;
+                }
+                else if (have.Enabled == false && haveNot.Enabled == false)
+                {
+                    have.Enabled = true;
+                    haveNot.Enabled = true;
+                    chart1.Series["Have"].ChartType = SeriesChartType.Line;
+                    chart1.Series["Have Not"].ChartType = SeriesChartType.Line;
+                    chart1.Titles.Add("Spridning av kundersålder och koppling till om dem har eller inte har försäkring");
+                    chart1.ChartAreas[0].AxisY.Title = "Antal";
+                    chart1.ChartAreas[0].AxisX.Title = "Ålder";
+                    chart1.Series["Have"].BorderWidth = 5;
+                    chart1.Series["Have Not"].BorderWidth = 5;
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            {
+                Series have = chart1.Series["Series3"];
+                Series haveNot = chart1.Series["Series4"];
+
+                if (have.Enabled == true && haveNot.Enabled == true)
+                {
+                    have.Enabled = false;
+                }
+                else if (have.Enabled == false && haveNot.Enabled == true)
+                {
+                    haveNot.Enabled = false;
+                    have.Enabled = true;
+                }
+                else if (have.Enabled == true && haveNot.Enabled == false)
+                {
+                    haveNot.Enabled = false;
+                    have.Enabled = false;
+                }
+                else if (have.Enabled == false && haveNot.Enabled == false)
+                {
+                    have.Enabled = true;
+                    haveNot.Enabled = true;
+                }
+
+
+            }
         }
     }
-    
 }
+    
+
