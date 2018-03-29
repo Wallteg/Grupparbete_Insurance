@@ -389,6 +389,7 @@ namespace Grupparbete_Insurance
                 if (have.Enabled == true && haveNot.Enabled == true)
                 {
                     have.Enabled = false;
+                    chart1.Titles.Clear();
                 }
                 else if (have.Enabled == false && haveNot.Enabled == true)
                 {
@@ -404,6 +405,7 @@ namespace Grupparbete_Insurance
                 {
                     have.Enabled = true;
                     haveNot.Enabled = true;
+                    chart1.Titles
                 }
 
 
