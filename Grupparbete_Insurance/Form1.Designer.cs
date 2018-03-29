@@ -54,6 +54,7 @@
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(103, 0);
             this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Age Insured";
@@ -67,6 +68,7 @@
             series4.Legend = "Legend1";
             series4.Name = "Education Uninsured";
             series5.ChartArea = "ChartArea1";
+            series5.IsValueShownAsLabel = true;
             series5.Legend = "Legend1";
             series5.Name = "Occupation Insured";
             series6.ChartArea = "ChartArea1";
@@ -86,7 +88,7 @@
             this.chart1.Series.Add(series6);
             this.chart1.Series.Add(series7);
             this.chart1.Series.Add(series8);
-            this.chart1.Size = new System.Drawing.Size(757, 437);
+            this.chart1.Size = new System.Drawing.Size(1250, 700);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -134,7 +136,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(857, 462);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
