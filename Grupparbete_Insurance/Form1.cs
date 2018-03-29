@@ -216,11 +216,6 @@ namespace Grupparbete_Insurance
             ageNoIns.Enabled = false;
 
 
-
-
-
-
-
             Series educationIns = chart1.Series["Education Insured"]; // Hämtar serien från diagramet
             educationIns.Enabled = false;
 
@@ -229,7 +224,7 @@ namespace Grupparbete_Insurance
             educationIns.Points.AddXY("secondary", ((decimal)secondary / counter) * 100);
             educationIns.Points.AddXY("tertiary", ((decimal)tertiary / counter) * 100);
 
-
+        
             Series educationNoIns = chart1.Series["Education Uninsured"]; // Hämtar serien från diagramet
             educationNoIns.Enabled = false;
 
@@ -237,8 +232,6 @@ namespace Grupparbete_Insurance
             educationNoIns.Points.AddXY("primary", ((decimal)primaryn / counter) * 100);
             educationNoIns.Points.AddXY("secondary", ((decimal)secondaryn / counter) * 100);
             educationNoIns.Points.AddXY("tertiary", ((decimal)tertiaryn / counter) * 100);
-
-            //MARIAL SOFIA
 
 
             Series maritalIns = chart1.Series["Marital Status Insured"]; // Hämtar serien från diagramet (dom som har försäkring)
@@ -254,11 +247,6 @@ namespace Grupparbete_Insurance
             maritalNoIns.Points.AddXY("Married", ((decimal)marriedn / counter) * 100);
             maritalNoIns.Points.AddXY("Single", ((decimal)singlen / counter) * 100);
             maritalNoIns.Points.AddXY("Divorced", ((decimal)divorcedn / counter) * 100);
-
-
-
-
-
 
 
             Series occupationIns = chart1.Series["Occupation Insured"]; // Hämtar serien från diagramet
