@@ -104,120 +104,172 @@ namespace Grupparbete_Insurance
             }
 
 
-
-            /*var query = from r in customerList
-                        group r by r.age - (r.age % 10) into r
-                        select new
-                        {
-                            Range = r.Key,
-                            Count = r.Count()
-                        }; */
-            /*
-foreach(var x in Query)
-
-{
-
-}
-
-// var groupedCustomerList = customerList.GroupBy(y => y.age).Select(age => age.ToList()).ToList();
-
-// denna grupperar samt sorterar alla åldrar
-var hejMomina = from Customer in customerList
-                group Customer by Customer.age into newGroup
-                orderby newGroup.Key
-                select newGroup;
-
-/*
- Foreach (var nameGroup in hejMomina)
-{
-
-    foreach (var Customer in nameGroup)
-    {
-        chart1.Series["Series1"].Points.AddXY(Customer.age, Customer.balance);
-    }
-}
-*/
-
-
-
-            //   chart1.DataManipulator.GroupByAxisLabel("Antal", "age");
             for (int i = 17; i <= 90; i++) // Plockar ut ålder, grupperar och räknar antalet.
             {
                 var ins = customerList.Where(y => y.age == i && y.carInsurance == 1);
-                //var byage = customerList.GroupBy(y => y.age);
-                chart1.Series["Bilförsäkring"].Points.AddXY(i, ins.Count());
+                chart1.Series["Age Insured"].Points.AddXY(i, ins.Count());
 
                 var noIns = customerList.Where(y => y.age == i && y.carInsurance == 0);
-                chart1.Series["Utan försäkring"].Points.AddXY(i, noIns.Count());
+                chart1.Series["Age Uninsured"].Points.AddXY(i, noIns.Count());
             }
 
 
 
-            /*   foreach (Customer c in customerList)
-               {
-                   var q = customerList.Where(y => y.carInsurance == 1);
-                   chart1.Series["Series1"].Points.AddXY(c.education, q.Count());
+            /*        var groups = customerLis0t.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
 
-               };
+                int totalCount = groups.Sum(g => g.Count());
+
+                int countUppTill25 = groups.Where(g => g.Key <= 25).Sum(g => g.Count());
+                int count26Till32 = groups.Where(g => g.Key >= 26 && g.Key <= 32).Sum(g => g.Count());
+                int count33Till40 = groups.Where(g => g.Key >= 33 && g.Key <= 40).Sum(g => g.Count());
+                int count41Till50 = groups.Where(g => g.Key >= 41 && g.Key <= 50).Sum(g => g.Count());
+                int count51Till65 = groups.Where(g => g.Key >= 51 && g.Key <= 65).Sum(g => g.Count());
+                int count66OchAldre = groups.Where(g => g.Key >= 66).Sum(g => g.Count());
+
+                Series serice1 = chart2.Series["Series1"]; // Hämtar serien från diagramet
+                serice1.Points.AddXY("0 - 25", ((decimal) countUppTill25 / totalCount) * 100);
+                    serice1.Points.AddXY("26 - 32", ((decimal) count26Till32 / totalCount) * 100);
+                    serice1.Points.AddXY("33 - 40", ((decimal) count33Till40 / totalCount) * 100);
+                    serice1.Points.AddXY("41 - 50", ((decimal) count41Till50 / totalCount) * 100);
+                    serice1.Points.AddXY("51 - 65", ((decimal) count51Till65 / totalCount) * 100);
+                    serice1.Points.AddXY("66+", ((decimal) count66OchAldre / totalCount) * 100);
+
+                    chart2.Series["Series1"].ChartType = SeriesChartType.RangeColumn;
+                    chart2.Titles.Add("Procentuell");
+                    chart2.ChartAreas[0].AxisY.Title = "Antal i procent";
+                    chart2.ChartAreas[0].AxisX.Title = "Ålder";
+                    chart2.Series["Series1"].BorderWidth = 5;
+
+
+                    //Series serice1 = chart1.Series["Series1"]; // Hämtar serien från diagramet
+                    //serice1.Points.AddXY("0 - 25", countUppTill25);
+                    //serice1.Points.AddXY("26 - 32", count26Till32);
+                    //serice1.Points.AddXY("33 - 40", count33Till40);
+                    //serice1.Points.AddXY("41 - 50", count41Till50);
+                    //serice1.Points.AddXY("51 - 65", count51Till65);
+                    //serice1.Points.AddXY("66+", count66OchAldre);
+
             */
 
-            /*
-            foreach (Customer c in customerList.Where(y => y.carInsurance == 1))
+            // CALLES DEL FÖR ATT FÅ FRAM JOB / PROCENT
+
+            var jobs = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
+
+            int totalCounts = jobs.Sum(j => j.Count());
+
+            int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
+            int technician = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
+            int bluecollar = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
+            int admin = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
+            int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
+            int services = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
+            int selfemployed = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
+            int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
+            int unemployed = jobs.Where(j => j.Key == "unemployed").Sum(j => j.Count());
+            int entrepreneur = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
+            int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
+
+
+
+            Series series1 = chart1.Series["Occupation Insured"]; // Hämtar serien från diagramet
+            series1.Points.AddXY("management", ((decimal)management / totalCounts) * 100);
+            series1.Points.AddXY("technician", ((decimal)technician / totalCounts) * 100);
+            series1.Points.AddXY("bluecollar", ((decimal)bluecollar / totalCounts) * 100);
+            series1.Points.AddXY("admin", ((decimal)admin / totalCounts) * 100);
+            series1.Points.AddXY("retired", ((decimal)retired / totalCounts) * 100);
+            series1.Points.AddXY("services", ((decimal)services / totalCounts) * 100);
+            series1.Points.AddXY("selfemployed", ((decimal)selfemployed / totalCounts) * 100);
+            series1.Points.AddXY("student", ((decimal)student / totalCounts) * 100);
+            series1.Points.AddXY("unemployed", ((decimal)unemployed / totalCounts) * 100);
+            series1.Points.AddXY("entrepreneur", ((decimal)entrepreneur / totalCounts) * 100);
+            series1.Points.AddXY("housemaid", ((decimal)housemaid / totalCounts) * 100);
+
+
+
+
+            // SOFIAS DEL OM MARTIAL
+
+            var Marital = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.marital).OrderBy(m => m.Key).ToList();
+            int totalCount1 = Marital.Sum(m => m.Count());
+
+            int maried = Marital.Where(m => m.Key == "married").Sum(m => m.Count());
+            int single = Marital.Where(m => m.Key == "single").Sum(m => m.Count());
+            int divorced = Marital.Where(m => m.Key == "divorced").Sum(m => m.Count());
+
+            Series serice1 = chart1.Series["Marital Status Insured"]; // Hämtar serien från diagramet
+            serice1.Points.AddXY("married", ((decimal)maried / totalCount1) * 100);
+            serice1.Points.AddXY("single", ((decimal)single / totalCount1) * 100);
+            serice1.Points.AddXY("divorced", ((decimal)divorced / totalCount1) * 100);
+
+
+
+
+            // Marcus Lösning för chart med procent, baserat på Utbildning.
+            var edu = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.education).OrderBy(ed => ed.Key).ToList();
+            var edu1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.education).OrderBy(ed1 => ed1.Key).ToList();
+            int totalCount2 = edu.Sum(ed => ed.Count());
+            int totalCount3 = edu1.Sum(ed1 => ed1.Count());
+
+            int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
+            int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
+            int secondary = edu.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
+            int tertiary = edu.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
+
+            Series series3 = chart1.Series["Education Insured"]; // Hämtar serien från diagramet
+            series3.Enabled = false;
+
+            series3.Points.AddXY("NA", ((decimal)NA / totalCount2) * 100);
+            series3.Points.AddXY("primary", ((decimal)primary / totalCount2) * 100);
+            series3.Points.AddXY("secondary", ((decimal)secondary / totalCount2) * 100);
+            series3.Points.AddXY("tertiary", ((decimal)tertiary / totalCount2) * 100);
+
+            Series series4 = chart1.Series["Education Uninsured"]; // Hämtar serien från diagramet
+            series4.Enabled = false;
+
+            series4.Points.AddXY("NA", ((decimal)NA / totalCount3) * 100);
+            series4.Points.AddXY("primary", ((decimal)primary / totalCount3) * 100);
+            series4.Points.AddXY("secondary", ((decimal)secondary / totalCount3) * 100);
+            series4.Points.AddXY("tertiary", ((decimal)tertiary / totalCount3) * 100);
+
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
             {
-                chart1.Series["Series1"].Points.AddXY(c.age,c.);
-            } 
-            */
-            chart1.Series["Utan försäkring"].ChartType = SeriesChartType.Line;
-            chart1.Series["Bilförsäkring"].ChartType = SeriesChartType.Line;
-            chart1.Titles.Add("Spridning av kundersålder och koppling till om dem har eller inte har försäkring");
-            chart1.ChartAreas[0].AxisY.Title = "Antal";
-            chart1.ChartAreas[0].AxisX.Title = "Ålder";
-            chart1.Series["Utan försäkring"].BorderWidth = 5;
-            chart1.Series["Bilförsäkring"].BorderWidth = 5;
+                Series have = chart1.Series["Age Insured"];
+                Series haveNot = chart1.Series["Age Uninsured"];
 
+                if (have.Enabled == true && haveNot.Enabled == true)
+                {
+                    have.Enabled = false;
 
-
-
-            /*
-                        foreach (var Customer in nameGroup)
-                        {
-                            chart1.Series["Series1"].Points.AddXY(Customer.age, Customer.balance);
-                        }
-
-            */
-            var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
-
-            int totalCount = groups.Sum(g => g.Count());
-
-            int countUppTill25 = groups.Where(g => g.Key <= 25).Sum(g => g.Count());
-            int count26Till32 = groups.Where(g => g.Key >= 26 && g.Key <= 32).Sum(g => g.Count());
-            int count33Till40 = groups.Where(g => g.Key >= 33 && g.Key <= 40).Sum(g => g.Count());
-            int count41Till50 = groups.Where(g => g.Key >= 41 && g.Key <= 50).Sum(g => g.Count());
-            int count51Till65 = groups.Where(g => g.Key >= 51 && g.Key <= 65).Sum(g => g.Count());
-            int count66OchAldre = groups.Where(g => g.Key >= 66).Sum(g => g.Count());
-
-            Series serice1 = chart2.Series["Series1"]; // Hämtar serien från diagramet
-            serice1.Points.AddXY("0 - 25", ((decimal)countUppTill25 / totalCount) * 100);
-            serice1.Points.AddXY("26 - 32", ((decimal)count26Till32 / totalCount) * 100);
-            serice1.Points.AddXY("33 - 40", ((decimal)count33Till40 / totalCount) * 100);
-            serice1.Points.AddXY("41 - 50", ((decimal)count41Till50 / totalCount) * 100);
-            serice1.Points.AddXY("51 - 65", ((decimal)count51Till65 / totalCount) * 100);
-            serice1.Points.AddXY("66+", ((decimal)count66OchAldre / totalCount) * 100);
-
-            chart2.Series["Series1"].ChartType = SeriesChartType.RangeColumn;
-            chart2.Titles.Add("Procentuell");
-            chart2.ChartAreas[0].AxisY.Title = "Antal i procent";
-            chart2.ChartAreas[0].AxisX.Title = "Ålder";
-            chart2.Series["Series1"].BorderWidth = 5;
-
-
-            //Series serice1 = chart1.Series["Series1"]; // Hämtar serien från diagramet
-            //serice1.Points.AddXY("0 - 25", countUppTill25);
-            //serice1.Points.AddXY("26 - 32", count26Till32);
-            //serice1.Points.AddXY("33 - 40", count33Till40);
-            //serice1.Points.AddXY("41 - 50", count41Till50);
-            //serice1.Points.AddXY("51 - 65", count51Till65);
-            //serice1.Points.AddXY("66+", count66OchAldre);
+                }
+                else if (have.Enabled == false && haveNot.Enabled == true)
+                {
+                    haveNot.Enabled = false;
+                    have.Enabled = true;
+                }
+                else if (have.Enabled == true && haveNot.Enabled == false)
+                {
+                    haveNot.Enabled = false;
+                    have.Enabled = false;
+                    chart1.Titles.Clear();
+                }
+                else if (have.Enabled == false && haveNot.Enabled == false)
+                {
+                    have.Enabled = true;
+                    haveNot.Enabled = true;
+                    chart1.Series["Age Insured"].ChartType = SeriesChartType.Line;
+                    chart1.Series["Age Uninsured"].ChartType = SeriesChartType.Line;
+                    chart1.Titles.Add("Spridning av kundersålder och koppling till om dem har eller inte har försäkring");
+                    chart1.ChartAreas[0].AxisY.Title = "Antal";
+                    chart1.ChartAreas[0].AxisX.Title = "Ålder";
+                    chart1.Series["Age Insured"].BorderWidth = 5;
+                    chart1.Series["Age Uninsured"].BorderWidth = 5;
+                }
+            }
         }
     }
 }
