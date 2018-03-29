@@ -117,8 +117,9 @@ namespace Grupparbete_Insurance
                 chart1.Series["Age Uninsured"].Points.AddXY(i, noIns.Count());
             }
 
+            
 
-            /*        var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
+            /*        var groups = customerLis0t.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
 
                 int totalCount = groups.Sum(g => g.Count());
 
@@ -187,36 +188,6 @@ namespace Grupparbete_Insurance
             series1.Points.AddXY("entrepreneur", ((decimal)entrepreneur / totalCounts) * 100);
             series1.Points.AddXY("housemaid", ((decimal)housemaid / totalCounts) * 100);
 
-            var jobsNoins = customerList.Where(c => c.carInsurance == 0).GroupBy(c1 => c1.job).OrderBy(j1 => j1.Key).ToList();
-
-            int totalCountsjob2 = jobs.Sum(j1 => j1.Count());
-
-            int management2 = jobs.Where(j1 => j1.Key == "management").Sum(j1 => j1.Count());
-            int technician2 = jobs.Where(j1 => j1.Key == "technician").Sum(j1 => j1.Count());
-            int bluecollar2 = jobs.Where(j1 => j1.Key == "blue-collar").Sum(j1 => j1.Count());
-            int admin2 = jobs.Where(j1 => j1.Key == "admin.").Sum(j1 => j1.Count());
-            int retired2 = jobs.Where(j1 => j1.Key == "retired").Sum(j1 => j1.Count());
-            int services2 = jobs.Where(j1 => j1.Key == "services").Sum(j1 => j1.Count());
-            int selfemployed2 = jobs.Where(j1 => j1.Key == "self-employed").Sum(j1 => j1.Count());
-            int student2 = jobs.Where(j1 => j1.Key == "student").Sum(j1 => j1.Count());
-            int unemployed2 = jobs.Where(j1 => j1.Key == "unemployed").Sum(j1 => j1.Count());
-            int entrepreneur2 = jobs.Where(j1 => j1.Key == "entrepreneur").Sum(j1 => j1.Count());
-            int housemaid2 = jobs.Where(j1 => j1.Key == "housemaid").Sum(j1 => j1.Count());
-
-
-
-            Series series2 = chart1.Series["Occupation Uninsured"]; // Hämtar serien från diagramet
-            series1.Points.AddXY("management", ((decimal)management2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("technician", ((decimal)technician2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("bluecollar", ((decimal)bluecollar2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("admin", ((decimal)admin2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("retired", ((decimal)retired2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("services", ((decimal)services2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("selfemployed", ((decimal)selfemployed2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("student", ((decimal)student2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("unemployed", ((decimal)unemployed2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("entrepreneur", ((decimal)entrepreneur2 / totalCountsjob2) * 100);
-            series1.Points.AddXY("housemaid", ((decimal)housemaid2 / totalCountsjob2) * 100);
 
 
 
@@ -249,6 +220,7 @@ namespace Grupparbete_Insurance
             int tertiary = edu.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
 
             Series series3 = chart1.Series["Education Insured"]; // Hämtar serien från diagramet
+            series3.Enabled = false;
 
             series3.Points.AddXY("NA", ((decimal)NA / totalCount2) * 100);
             series3.Points.AddXY("primary", ((decimal)primary / totalCount2) * 100);
@@ -256,6 +228,7 @@ namespace Grupparbete_Insurance
             series3.Points.AddXY("tertiary", ((decimal)tertiary / totalCount2) * 100);
 
             Series series4 = chart1.Series["Education Uninsured"]; // Hämtar serien från diagramet
+            series4.Enabled = false;
 
             series4.Points.AddXY("NA", ((decimal)NA / totalCount3) * 100);
             series4.Points.AddXY("primary", ((decimal)primary / totalCount3) * 100);
@@ -308,35 +281,37 @@ namespace Grupparbete_Insurance
 
             {
 
-                Series have = chart1.Series["Education Insured"];
-                Series haveNot = chart1.Series["Education Uninsured"];
+                Series series3 = chart1.Series["Education Insured"];
+                Series series4 = chart1.Series["Education Uninsured"];
 
 
-                if (have.Enabled == true && haveNot.Enabled == true)
+                if (series3.Enabled == false && series4.Enabled == false)
                 {
-                    have.Enabled = false;
+                    series3.Enabled = true;
 
-                }
-                else if (have.Enabled == false && haveNot.Enabled == true)
-                {
-                    haveNot.Enabled = false;
-                    have.Enabled = true;
-                }
-                else if (have.Enabled == true && haveNot.Enabled == false)
-                {
-                    haveNot.Enabled = false;
-                    have.Enabled = false;
-                    chart1.Titles.Clear();
-                }
-                else if (have.Enabled == false && haveNot.Enabled == false)
-                {
-                    have.Enabled = true;
-                    haveNot.Enabled = true;
                     chart1.Titles.Add("Education");
                     chart1.ChartAreas[0].AxisY.Title = "Amount in Percentage";
                     chart1.ChartAreas[0].AxisX.Title = "Education level";
                     chart1.Series["Education Insured"].ChartType = SeriesChartType.Column;
                     chart1.Series["Education Uninsured"].ChartType = SeriesChartType.Column;
+
+                }
+                else if (series3.Enabled == true && series4.Enabled == false)
+                {
+                    series3.Enabled = false;
+                    series4.Enabled = true;
+                                    }
+                else if (series3.Enabled == false && series4.Enabled == true)
+                {
+                    series3.Enabled = true;
+                    series4.Enabled = true;
+                    
+                }
+                else if (series3.Enabled == true && series4.Enabled == true)
+                {
+                    series3.Enabled = false;
+                    series4.Enabled = false;
+                    chart1.Titles.Clear();
                 }
 
 
