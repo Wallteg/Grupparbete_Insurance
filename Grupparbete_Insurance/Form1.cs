@@ -131,7 +131,8 @@ namespace Grupparbete_Insurance
             var Marital1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.marital).OrderBy(m => m.Key).ToList();
             var jobs = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
             var jobs1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
-
+            var home = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.homeInsurance).OrderBy(h => h.Key).ToList();
+            var home1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.homeInsurance).OrderBy(h => h.Key).ToList();
 
             int counter = customerList.Count(); // Beräknar antalet rader för att kunna få ut procent
 
@@ -195,6 +196,18 @@ namespace Grupparbete_Insurance
             int entrepreneurn = jobs1.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
             int housemaidn = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
 
+            int homecar = home.Where(h => h.Key == 1).Sum(h => h.Count());
+            int noHomeCar = home.Where(h => h.Key == 0).Sum(h => h.Count());
+
+            int homeNoCar = home1.Where(h => h.Key == 1).Sum(h => h.Count());
+            int noHomeNoCar = home1.Where(h => h.Key == 0).Sum(h => h.Count());
+
+            Series insurance = chart1.Series["Insurance"];
+            insurance.Points.AddXY("Both", ((decimal)homecar / counter) * 100);
+            insurance.Points.AddXY("Car",((decimal)noHomeCar / counter) * 100);
+            insurance.Points.AddXY("Home", ((decimal)homeNoCar / counter) * 100);
+            insurance.Points.AddXY("No Insurance", ((decimal)noHomeNoCar / counter) * 100);
+            insurance.Enabled = false;
 
             Series ageIns = chart1.Series["Age Insured"]; // Hämtar serien från diagramet
             ageIns.Points.AddXY("0 - 25", ((decimal)countUppTill25 / counter) * 100);
@@ -569,6 +582,36 @@ namespace Grupparbete_Insurance
                     chart1.Titles.Clear();
                 }
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            {
+
+                Series insurance = chart1.Series["Insurance"];
+
+
+                if (insurance.Enabled == false)
+                {
+                    insurance.Enabled = true;
+
+                    chart1.Titles.Add("Insurance types");
+                    chart1.ChartAreas[0].AxisY.Title = "Amount in Percentage";
+                    chart1.ChartAreas[0].AxisX.Title = "Insurances";
+                    chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
+
+                    chart1.ChartAreas[0].AxisY.Maximum = 40;
+                    chart1.ChartAreas[0].AxisY.Minimum = 0;
+                }
+                else if (insurance.Enabled == true)
+                {
+                    
+                    insurance.Enabled = false;
+
+                    chart1.Titles.Clear();
+                }
+            }
+
         }
     }
 

@@ -38,11 +38,13 @@
             System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,6 +89,9 @@
             series8.IsValueShownAsLabel = true;
             series8.Legend = "Legend1";
             series8.Name = "Marital Status Uninsured";
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "Insurance";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
@@ -95,6 +100,7 @@
             this.chart1.Series.Add(series6);
             this.chart1.Series.Add(series7);
             this.chart1.Series.Add(series8);
+            this.chart1.Series.Add(series9);
             this.chart1.Size = new System.Drawing.Size(1250, 700);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -139,11 +145,22 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(12, 235);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(85, 23);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "Homeinsurance";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -164,6 +181,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 
