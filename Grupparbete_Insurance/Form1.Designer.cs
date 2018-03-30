@@ -39,6 +39,8 @@
             System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -56,7 +58,7 @@
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(103, 0);
             this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
             series1.ChartArea = "ChartArea1";
             series1.IsValueShownAsLabel = true;
             series1.Legend = "Legend1";
@@ -92,6 +94,14 @@
             series9.ChartArea = "ChartArea1";
             series9.Legend = "Legend1";
             series9.Name = "Insurance";
+            series10.ChartArea = "ChartArea1";
+            series10.IsValueShownAsLabel = true;
+            series10.Legend = "Legend1";
+            series10.Name = "Student";
+            series11.ChartArea = "ChartArea1";
+            series11.IsValueShownAsLabel = true;
+            series11.Legend = "Legend1";
+            series11.Name = "no Student";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
@@ -101,6 +111,8 @@
             this.chart1.Series.Add(series7);
             this.chart1.Series.Add(series8);
             this.chart1.Series.Add(series9);
+            this.chart1.Series.Add(series10);
+            this.chart1.Series.Add(series11);
             this.chart1.Size = new System.Drawing.Size(1250, 700);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";

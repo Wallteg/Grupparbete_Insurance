@@ -106,8 +106,8 @@ namespace Grupparbete_Insurance
             }
 
 
-            /*
             
+            /*
             for (int i = 17; i <= 90; i++) // Plockar ut ålder, grupperar och räknar antalet.
             {
                 var ins = customerList.Where(y => y.age == i && y.carInsurance == 1);
@@ -135,22 +135,49 @@ namespace Grupparbete_Insurance
             var home1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.homeInsurance).OrderBy(h => h.Key).ToList();
 
             int counter = customerList.Count(); // Beräknar antalet rader för att kunna få ut procent
+            int countStudent = customerList.Where(s => s.job == "student").Count();
+            int countRetired = customerList.Where(s => s.job == "retired").Count();
+            int countMan = customerList.Where(s => s.job == "management").Count();
 
-            
+            //management
+            int studentIns = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
+            int studentNoIns = jobs1.Where(j => j.Key == "student").Sum(j => j.Count());
+            int retiredIns = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
+            int retiredNoIns = jobs1.Where(j => j.Key == "retired").Sum(j => j.Count());
+            int manIns = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
+            int manNoIns = jobs1.Where(j => j.Key == "management").Sum(j => j.Count());
+
+
+            Series Studenter = chart1.Series["Student"]; // Hämtar serien från diagramet
+            Studenter.Points.AddXY("Student", ((decimal)studentIns / countStudent) * 100);
+            Studenter.Points.AddXY("Retired", ((decimal)retiredIns / countRetired) * 100);
+            Studenter.Points.AddXY("management", ((decimal)manIns / countMan) * 100);
+
+            Series noStudent = chart1.Series["no Student"];
+            noStudent.Points.AddY(((decimal)studentNoIns / countStudent) * 100);
+            noStudent.Points.AddY(((decimal)retiredNoIns / countRetired) * 100);
+            noStudent.Points.AddY(((decimal)manNoIns / countMan) * 100);
+
+            chart1.Series["Student"].ChartType = SeriesChartType.StackedColumn;
+            chart1.Series["no Student"].ChartType = SeriesChartType.StackedColumn;
+            chart1.ChartAreas[0].AxisY.Maximum = 100;
+            chart1.ChartAreas[0].AxisY.Minimum = 0;
+
+
             int countUppTill25 = groups.Where(g => g.Key <= 25).Sum(g => g.Count());
             int count26Till32 = groups.Where(g => g.Key >= 26 && g.Key <= 32).Sum(g => g.Count());
             int count33Till40 = groups.Where(g => g.Key >= 33 && g.Key <= 40).Sum(g => g.Count());
             int count41Till50 = groups.Where(g => g.Key >= 41 && g.Key <= 50).Sum(g => g.Count());
             int count51Till65 = groups.Where(g => g.Key >= 51 && g.Key <= 65).Sum(g => g.Count());
             int count66OchAldre = groups.Where(g => g.Key >= 66).Sum(g => g.Count());
-            
+
             int countUppTill25n = groups1.Where(gn => gn.Key <= 25).Sum(gn => gn.Count());
             int count26Till32n = groups1.Where(gn => gn.Key >= 26 && gn.Key <= 32).Sum(gn => gn.Count());
             int count33Till40n = groups1.Where(gn => gn.Key >= 33 && gn.Key <= 40).Sum(gn => gn.Count());
             int count41Till50n = groups1.Where(gn => gn.Key >= 41 && gn.Key <= 50).Sum(gn => gn.Count());
             int count51Till65n = groups1.Where(gn => gn.Key >= 51 && gn.Key <= 65).Sum(gn => gn.Count());
             int count66OchAldren = groups1.Where(gn => gn.Key >= 66).Sum(gn => gn.Count());
-            
+
 
             int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
             int secondary = edu.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
