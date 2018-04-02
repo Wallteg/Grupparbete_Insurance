@@ -112,11 +112,8 @@ namespace Grupparbete_Insurance
             var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
             var groups1 = customerList.Where(c => c.carInsurance == 0).GroupBy(cn => cn.age).OrderBy(gn => gn.Key).ToList();
             var edu = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.education).OrderBy(ed => ed.Key).ToList();
-            var edu1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.education).OrderBy(ed1 => ed1.Key).ToList();
-            var Marital = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.marital).OrderBy(m => m.Key).ToList();
-            var Marital1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.marital).OrderBy(m => m.Key).ToList();
+            var Maritals = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.marital).OrderBy(m => m.Key).ToList();
             var jobs = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
-            var jobs1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.job).OrderBy(j => j.Key).ToList();
             var home = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.homeInsurance).OrderBy(h => h.Key).ToList();
             var home1 = customerList.Where(c => c.carInsurance == 0).GroupBy(c => c.homeInsurance).OrderBy(h => h.Key).ToList();
 
@@ -141,49 +138,78 @@ namespace Grupparbete_Insurance
             int count66OchAldren = groups1.Where(gn => gn.Key >= 66).Sum(gn => gn.Count());
 
             //Samma princip fast här tar vi reda på antalet personer som har en viss utbildningsgrad.
+            int countPri = customerList.Where(ed => ed.education == "primary").Count();
+            int countSec = customerList.Where(ed => ed.education == "secondary").Count();
+            int countTer = customerList.Where(ed => ed.education == "tertiary").Count();
+          //  int countNA = customerList.Where(ed => ed.education == "NA").Count();
+
             int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
             int secondary = edu.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
             int tertiary = edu.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
-            int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
+          //  int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
 
-            int primaryn = edu1.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
-            int secondaryn = edu1.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
-            int tertiaryn = edu1.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
-            int NAn = edu1.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
+            Series educationIns = chart1.Series["Education"]; // Hämtar serien från diagramet
+            educationIns.Points.AddXY("Tertiary", ((decimal)tertiary / countTer) * 100);
+            educationIns.Points.AddXY("Secondary", ((decimal)secondary / countSec) * 100);
+            educationIns.Points.AddXY("Primary", ((decimal)primary / countPri) * 100);
+
+            //  educationIns.Points.AddXY("NA", ((decimal)NA / countNA) * 100);
+            educationIns.Enabled = false;
 
             //Civilstatus
-            int married = Marital.Where(m => m.Key == "married").Sum(m => m.Count());
-            int single = Marital.Where(m => m.Key == "single").Sum(m => m.Count());
-            int divorced = Marital.Where(m => m.Key == "divorced").Sum(m => m.Count());
+            int countMarried = customerList.Where(m => m.marital == "married").Count();
+            int countSingle = customerList.Where(m => m.marital == "single").Count();
+            int countDivorced = customerList.Where(m => m.marital == "divorced").Count();
 
-            int marriedn = Marital1.Where(m => m.Key == "married").Sum(m => m.Count());
-            int singlen = Marital1.Where(m => m.Key == "single").Sum(m => m.Count());
-            int divorcedn = Marital1.Where(m => m.Key == "divorced").Sum(m => m.Count());
+            int married = Maritals.Where(m => m.Key == "married").Sum(m => m.Count());
+            int single = Maritals.Where(m => m.Key == "single").Sum(m => m.Count());
+            int divorced = Maritals.Where(m => m.Key == "divorced").Sum(m => m.Count());
+
+            Series maritalIns = chart1.Series["Marital Status"]; // Hämtar serien från diagramet
+            maritalIns.Points.AddXY("single", ((decimal)single / countSingle) * 100);
+            maritalIns.Points.AddXY("divorced", ((decimal)divorced / countDivorced) * 100);
+            maritalIns.Points.AddXY("married", ((decimal)married / countMarried) * 100);
+            maritalIns.Enabled = false;
 
             //Yrke
-            int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
-            int technician = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
-            int bluecollar = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
-            int admin = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
-            int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
-            int services = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
-            int selfemployed = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
+            //Specifika counters
+            int countStudent = customerList.Where(s => s.job == "student").Count();
+            int countRetired = customerList.Where(s => s.job == "retired").Count();
+            int countMan = customerList.Where(s => s.job == "management").Count();
+            int countTech = customerList.Where(s => s.job == "technician").Count();
+            int countBlue = customerList.Where(s => s.job == "blue-collar").Count();
+            int countAdmin = customerList.Where(s => s.job == "admin.").Count();
+            int countServ = customerList.Where(s => s.job == "services").Count();
+            int countSE = customerList.Where(s => s.job == "self-employed").Count();
+            int countUE = customerList.Where(s => s.job == "unemployed").Count();
+            int countEntre = customerList.Where(s => s.job == "entrepreneur").Count();
+            int countHM = customerList.Where(s => s.job == "housemaid").Count();
+
             int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
+            int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
+            int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
+            int tech = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
+            int blue = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
+            int admin = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
+            int serv = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
+            int self = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
             int unemployed = jobs.Where(j => j.Key == "unemployed").Sum(j => j.Count());
-            int entrepreneur = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
+            int entre = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
             int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
 
-            int managementn = jobs1.Where(j => j.Key == "management").Sum(j => j.Count());
-            int techniciann = jobs1.Where(j => j.Key == "technician").Sum(j => j.Count());
-            int bluecollarn = jobs1.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
-            int adminn = jobs1.Where(j => j.Key == "admin.").Sum(j => j.Count());
-            int retiredn = jobs1.Where(j => j.Key == "retired").Sum(j => j.Count());
-            int servicesn = jobs1.Where(j => j.Key == "services").Sum(j => j.Count());
-            int selfemployedn = jobs1.Where(j => j.Key == "self-employed").Sum(j => j.Count());
-            int studentn = jobs1.Where(j => j.Key == "student").Sum(j => j.Count());
-            int unemployedn = jobs1.Where(j => j.Key == "unemployed").Sum(j => j.Count());
-            int entrepreneurn = jobs1.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
-            int housemaidn = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
+            Series occupationIns = chart1.Series["Occupation"]; // Hämtar serien från diagramet
+            occupationIns.Points.AddXY("Student", ((decimal)student / countStudent) * 100);
+            occupationIns.Points.AddXY("Retired", ((decimal)retired / countRetired) * 100);
+            occupationIns.Points.AddXY("unemployed", ((decimal)unemployed / countUE) * 100);
+            occupationIns.Points.AddXY("management", ((decimal)management / countMan) * 100);
+            occupationIns.Points.AddXY("admin", ((decimal)admin / countAdmin) * 100);
+            occupationIns.Points.AddXY("self-employed", ((decimal)self / countSE) * 100);
+            occupationIns.Points.AddXY("technician", ((decimal)tech / countTech) * 100);
+            occupationIns.Points.AddXY("housemaid", ((decimal)housemaid / countHM) * 100);
+            occupationIns.Points.AddXY("services", ((decimal)serv / countServ) * 100);
+            occupationIns.Points.AddXY("entrepreneur", ((decimal)entre / countEntre) * 100);
+            occupationIns.Points.AddXY("blue-collar", ((decimal)blue / countBlue) * 100);
+            occupationIns.Enabled = false;
 
             // Vi ville bland annat kunna se om det var vanligt att samla sina försäkringar på samma ställe inom banken
             // Denna del hjälper oss att få fram antalet kunder som har båda försäkringarna, endast bil, endast hem eller saknar försäkring inom banken
@@ -217,69 +243,7 @@ namespace Grupparbete_Insurance
             ageNoIns.Enabled = false; // Gör grafen ej synlig vid uppstart.
 
             //Skapar en serie för utbildning
-            Series educationIns = chart1.Series["Education Insured"]; // Hämtar serien från diagramet
-            educationIns.Enabled = false;
-
-            educationIns.Points.AddXY("NA", decimal.Round((NA / counter) * 100, 2));
-            educationIns.Points.AddXY("primary", decimal.Round((primary / counter) * 100, 2));
-            educationIns.Points.AddXY("secondary", decimal.Round((secondary / counter) * 100, 2));
-            educationIns.Points.AddXY("tertiary", decimal.Round((tertiary / counter) * 100, 2));
-
-
-            Series educationNoIns = chart1.Series["Education Uninsured"]; // Hämtar serien från diagramet
-            educationNoIns.Enabled = false;
-
-            educationNoIns.Points.AddXY("NA", decimal.Round((NAn / counter) * 100, 2));
-            educationNoIns.Points.AddXY("primary", decimal.Round((primaryn / counter) * 100, 2));
-            educationNoIns.Points.AddXY("secondary", decimal.Round((secondaryn / counter) * 100, 2));
-            educationNoIns.Points.AddXY("tertiary", decimal.Round((tertiaryn / counter) * 100, 2));
-
-
-            Series maritalIns = chart1.Series["Marital Status Insured"]; // Hämtar serien från diagramet (dom som har försäkring)
-            maritalIns.Enabled = false;
-
-            maritalIns.Points.AddXY("married", decimal.Round((married / counter) * 100, 2));
-            maritalIns.Points.AddXY("single", decimal.Round((single / counter) * 100, 2));
-            maritalIns.Points.AddXY("divorced", decimal.Round((divorced / counter) * 100, 2));
-
-            //Dom som inte har försäkring
-            Series maritalNoIns = chart1.Series["Marital Status Uninsured"]; // Hämtar serien från diagramet
-            maritalNoIns.Enabled = false;
-
-            maritalNoIns.Points.AddXY("Married", decimal.Round((marriedn / counter) * 100, 2));
-            maritalNoIns.Points.AddXY("Single", decimal.Round((singlen / counter) * 100, 2));
-            maritalNoIns.Points.AddXY("Divorced", decimal.Round((divorcedn / counter) * 100, 2));
-
-
-            Series occupationIns = chart1.Series["Occupation Insured"]; // Hämtar serien från diagramet
-            occupationIns.Points.AddXY("management", decimal.Round((management / counter) * 100, 2));
-            occupationIns.Points.AddXY("technician", decimal.Round((technician / counter) * 100, 2));
-            occupationIns.Points.AddXY("bluecollar", decimal.Round((bluecollar / counter) * 100, 2));
-            occupationIns.Points.AddXY("admin", decimal.Round((admin / counter) * 100, 2));
-            occupationIns.Points.AddXY("retired", decimal.Round((retired / counter) * 100, 2));
-            occupationIns.Points.AddXY("services", decimal.Round((services / counter) * 100, 2));
-            occupationIns.Points.AddXY("selfemployed", decimal.Round((selfemployed / counter) * 100, 2));
-            occupationIns.Points.AddXY("student", decimal.Round((student / counter) * 100, 2));
-            occupationIns.Points.AddXY("unemployed", decimal.Round((unemployed / counter) * 100, 2));
-            occupationIns.Points.AddXY("entrepreneur", decimal.Round((entrepreneur / counter) * 100, 2));
-            occupationIns.Points.AddXY("housemaid", decimal.Round((housemaid / counter) * 100, 2));
-
-            occupationIns.Enabled = false;
-
-            Series occupationNoIns = chart1.Series["Occupation Uninsured"]; // Hämtar serien från diagramet
-            occupationNoIns.Points.AddXY("management", decimal.Round((managementn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("technician", decimal.Round((techniciann / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("bluecollar", decimal.Round((bluecollarn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("admin", decimal.Round((adminn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("retired", decimal.Round((retiredn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("services", decimal.Round((servicesn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("selfemployed", decimal.Round((selfemployedn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("student", decimal.Round((studentn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("unemployed", decimal.Round((unemployedn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("entrepreneur", decimal.Round((entrepreneurn / counter) * 100, 2));
-            occupationNoIns.Points.AddXY("housemaid", decimal.Round((housemaidn / counter) * 100, 2));
-
-            occupationNoIns.Enabled = false;
+           
 
             Series insurance = chart1.Series["Insurance"];
             insurance.Points.AddXY("Both", decimal.Round((homecar / counter) * 100, 2));
@@ -405,10 +369,9 @@ namespace Grupparbete_Insurance
         {
 
             // samma sak som förra knappen fast nytt område. (Utbildningsgrad).
-            Series educationIns = chart1.Series["Education Insured"];
-            Series educationNoIns = chart1.Series["Education Uninsured"];
+            Series educationIns = chart1.Series["Education"];
 
-            if (educationIns.Enabled == false && educationNoIns.Enabled == false)
+            if (educationIns.Enabled == false)
             {
                 tomGraf();
                 //Börjar vara tom, sen får man ny visning för varje knapptryck
@@ -417,41 +380,30 @@ namespace Grupparbete_Insurance
                 chart1.Titles.Add("Education");
                 chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                 chart1.ChartAreas[0].AxisX.Title = "Education level";
-                chart1.Series["Education Insured"].ChartType = SeriesChartType.Column;
-                chart1.Series["Education Uninsured"].ChartType = SeriesChartType.Column;
-                chart1.ChartAreas[0].AxisY.Maximum = 35;
+                chart1.Series["Education"].ChartType = SeriesChartType.Column;
+                chart1.ChartAreas[0].AxisY.Maximum = 100;
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
-                chart1.Series["Education Insured"].Color = Color.OliveDrab;
-                chart1.Series["Education Uninsured"].Color = Color.Gray;
+                chart1.Series["Education"].Color = Color.OliveDrab;
 
 
             }
-            else if (educationIns.Enabled == true && educationNoIns.Enabled == false)
-            {
-                educationIns.Enabled = false;
-                educationNoIns.Enabled = true;
-            }
-            else if (educationIns.Enabled == false && educationNoIns.Enabled == true)
-            {
-                educationIns.Enabled = true;
-                educationNoIns.Enabled = true;
-
-            }
-            else if (educationIns.Enabled == true && educationNoIns.Enabled == true)
+            else if (educationIns.Enabled == true)
             {
                 tomGraf();
             }
+            
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             {
 
-                Series occupationIns = chart1.Series["Occupation Insured"];
-                Series occupationNoIns = chart1.Series["Occupation Uninsured"];
+                Series occupationIns = chart1.Series["Occupation"];
 
 
-                if (occupationIns.Enabled == false && occupationNoIns.Enabled == false)
+
+                if (occupationIns.Enabled == false)
                 {
                     tomGraf();
                     occupationIns.Enabled = true;
@@ -459,29 +411,17 @@ namespace Grupparbete_Insurance
                     chart1.Titles.Add("Occupation");
                     chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                     chart1.ChartAreas[0].AxisX.Title = "Occupation";
-                    chart1.Series["Occupation Insured"].ChartType = SeriesChartType.Column;
-                    chart1.Series["Occupation Uninsured"].ChartType = SeriesChartType.Column;
+                    chart1.Series["Occupation"].ChartType = SeriesChartType.Column;
                     chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
-                    chart1.ChartAreas[0].AxisY.Maximum = 15;
+                    chart1.ChartAreas[0].AxisY.Maximum = 100;
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
-                    chart1.Series["Occupation Insured"].Color = Color.Orange;
-                    chart1.Series["Occupation Uninsured"].Color = Color.Gray;
+                    chart1.Series["Occupation"].Color = Color.Orange;
                 }
-                else if (occupationIns.Enabled == true && occupationNoIns.Enabled == false)
-                {
-                    occupationIns.Enabled = false;
-                    occupationNoIns.Enabled = true;
-                }
-                else if (occupationIns.Enabled == false && occupationNoIns.Enabled == true)
-                {
-                    occupationNoIns.Enabled = true;
-                    occupationIns.Enabled = true;
-
-                }
-                else if (occupationIns.Enabled == true && occupationNoIns.Enabled == true)
+                else if (occupationIns.Enabled == true)
                 {
                     tomGraf();
                 }
+               
             }
         }
 
@@ -489,11 +429,11 @@ namespace Grupparbete_Insurance
         {
             {
 
-                Series martialIns = chart1.Series["Marital Status Insured"];
-                Series maritalNoIns = chart1.Series["Marital Status Uninsured"];
+                Series martialIns = chart1.Series["Marital Status"];
+                
 
 
-                if (martialIns.Enabled == false && maritalNoIns.Enabled == false)
+                if (martialIns.Enabled == false )
                 {
                     tomGraf();
                     martialIns.Enabled = true;
@@ -504,29 +444,18 @@ namespace Grupparbete_Insurance
                     chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                     chart1.ChartAreas[0].AxisX.Title = "Marital Status";
 
-                    chart1.ChartAreas[0].AxisY.Maximum = 40;
+                    chart1.ChartAreas[0].AxisY.Maximum = 100;
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
 
-                    chart1.Series["Marital Status Insured"].Color = Color.DarkViolet;
-                    chart1.Series["Marital Status Uninsured"].Color = Color.Gray;
+                    chart1.Series["Marital Status"].Color = Color.DarkViolet;
 
 
                 }
-                else if (martialIns.Enabled == true && maritalNoIns.Enabled == false)
-                {
-                    martialIns.Enabled = false;
-                    maritalNoIns.Enabled = true;
-                }
-                else if (martialIns.Enabled == false && maritalNoIns.Enabled == true)
-                {
-                    maritalNoIns.Enabled = true;
-                    martialIns.Enabled = true;
-
-                }
-                else if (martialIns.Enabled == true && maritalNoIns.Enabled == true)
+                else if (martialIns.Enabled == true)
                 {
                     tomGraf();
                 }
+              
             }
         }
 
