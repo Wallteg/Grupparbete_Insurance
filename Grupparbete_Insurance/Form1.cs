@@ -138,30 +138,57 @@ namespace Grupparbete_Insurance
             int countStudent = customerList.Where(s => s.job == "student").Count();
             int countRetired = customerList.Where(s => s.job == "retired").Count();
             int countMan = customerList.Where(s => s.job == "management").Count();
+            int countTech = customerList.Where(s => s.job == "technician").Count();
+            int countBlue = customerList.Where(s => s.job == "blue-collar").Count();
+            int countAdmin = customerList.Where(s => s.job == "admin.").Count();
+            int countServ = customerList.Where(s => s.job == "services").Count();
+            int countSE = customerList.Where(s => s.job == "self-employed").Count();
+            int countUE = customerList.Where(s => s.job == "unemployed").Count();
+            int countEntre = customerList.Where(s => s.job == "entrepreneur").Count();
+            int countHM = customerList.Where(s => s.job == "housemaid").Count();
 
-            //management
+
+            
             int studentIns = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
-            int studentNoIns = jobs1.Where(j => j.Key == "student").Sum(j => j.Count());
+            //int studentNoIns = jobs1.Where(j => j.Key == "student").Sum(j => j.Count());
             int retiredIns = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
-            int retiredNoIns = jobs1.Where(j => j.Key == "retired").Sum(j => j.Count());
+            //int retiredNoIns = jobs1.Where(j => j.Key == "retired").Sum(j => j.Count());
             int manIns = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
-            int manNoIns = jobs1.Where(j => j.Key == "management").Sum(j => j.Count());
+            //int manNoIns = jobs1.Where(j => j.Key == "management").Sum(j => j.Count());
+            int techIns = jobs.Where(j => j.Key == "technician").Sum(j => j.Count());
+            int blueIns = jobs.Where(j => j.Key == "blue-collar").Sum(j => j.Count());
+            int adminIns = jobs.Where(j => j.Key == "admin.").Sum(j => j.Count());
+            int servIns = jobs.Where(j => j.Key == "services").Sum(j => j.Count());
+            int seIns = jobs.Where(j => j.Key == "self-employed").Sum(j => j.Count());
+            int unemIns = jobs.Where(j => j.Key == "unemployed").Sum(j => j.Count());
+            int entreIns = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count()); 
+            int housemIns = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
+
+
 
 
             Series Studenter = chart1.Series["Student"]; // Hämtar serien från diagramet
             Studenter.Points.AddXY("Student", ((decimal)studentIns / countStudent) * 100);
             Studenter.Points.AddXY("Retired", ((decimal)retiredIns / countRetired) * 100);
+            Studenter.Points.AddXY("unemployed", ((decimal)unemIns/ countUE) * 100);
             Studenter.Points.AddXY("management", ((decimal)manIns / countMan) * 100);
+            Studenter.Points.AddXY("admin", ((decimal)adminIns / countAdmin) * 100);
+            Studenter.Points.AddXY("self-employed", ((decimal)seIns / countSE) * 100);
+            Studenter.Points.AddXY("technician", ((decimal)techIns / countTech) * 100);
+            Studenter.Points.AddXY("housemaid", ((decimal)housemIns / countHM) * 100);
+            Studenter.Points.AddXY("services", ((decimal)servIns / countServ) * 100);
+            Studenter.Points.AddXY("entrepreneur", ((decimal)entreIns / countEntre) * 100);
+            Studenter.Points.AddXY("blue-collar", ((decimal)blueIns / countBlue) * 100);
+            //Series noStudent = chart1.Series["no Student"];
+            //noStudent.Points.AddY(((decimal)studentNoIns / countStudent) * 100);
+            //noStudent.Points.AddY(((decimal)retiredNoIns / countRetired) * 100);
+            //noStudent.Points.AddY(((decimal)manNoIns / countMan) * 100);
 
-            Series noStudent = chart1.Series["no Student"];
-            noStudent.Points.AddY(((decimal)studentNoIns / countStudent) * 100);
-            noStudent.Points.AddY(((decimal)retiredNoIns / countRetired) * 100);
-            noStudent.Points.AddY(((decimal)manNoIns / countMan) * 100);
-
-            chart1.Series["Student"].ChartType = SeriesChartType.StackedColumn;
-            chart1.Series["no Student"].ChartType = SeriesChartType.StackedColumn;
+            chart1.Series["Student"].ChartType = SeriesChartType.Column;
+            //chart1.Series["no Student"].ChartType = SeriesChartType.StackedColumn;
             chart1.ChartAreas[0].AxisY.Maximum = 100;
             chart1.ChartAreas[0].AxisY.Minimum = 0;
+            chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
 
 
             int countUppTill25 = groups.Where(g => g.Key <= 25).Sum(g => g.Count());
