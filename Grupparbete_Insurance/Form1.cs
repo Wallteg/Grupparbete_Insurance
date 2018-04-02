@@ -21,11 +21,12 @@ namespace Grupparbete_Insurance
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             //Connection med Sql server, databas Insurance.
             SqlConnection conn = new SqlConnection();
 
             //Skapar en koppling till Databasen "Insurance" som finns på SQL server.
-            conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
+            conn.ConnectionString = "Data Source=DESKTOP-J421FR9;Initial Catalog=Insurance;Integrated Security=True";
             
             //Skapar en kundlista där vi sedan kan spara alla kunduppgifter om våra kunder.
             List<Customer> customerList = new List<Customer>();
@@ -285,7 +286,50 @@ namespace Grupparbete_Insurance
             insurance.Points.AddXY("Home", ((decimal)homeNoCar / counter) * 100);
             insurance.Points.AddXY("No Insurance", ((decimal)noHomeNoCar / counter) * 100);
             insurance.Enabled = false;
+
+            //Designinställningar
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            WindowState = FormWindowState.Maximized;
+
+            button1.BackColor = System.Drawing.Color.DeepSkyBlue;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.FlatAppearance.BorderColor = Color.DeepSkyBlue;
+            button1.FlatAppearance.BorderSize = 1;
+            button1.ForeColor = Color.White;
+            button1.Font = new Font("Microsoft Sans Serif", 12f);
+
+
+            button2.BackColor = System.Drawing.Color.OliveDrab;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.FlatAppearance.BorderColor = Color.OliveDrab;
+            button2.FlatAppearance.BorderSize = 1;
+            button2.ForeColor = Color.White;
+            button2.Font = new Font("Microsoft Sans Serif", 12f);
+
+            button3.BackColor = System.Drawing.Color.Orange;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.FlatAppearance.BorderColor = Color.Orange;
+            button3.FlatAppearance.BorderSize = 1;
+            button3.ForeColor = Color.White;
+            button3.Font = new Font("Microsoft Sans Serif", 12f);
+
+            button4.BackColor = System.Drawing.Color.DarkViolet;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.FlatAppearance.BorderColor = Color.DarkViolet;
+            button4.FlatAppearance.BorderSize = 1;
+            button4.ForeColor = Color.White;
+            button4.Font = new Font("Microsoft Sans Serif", 12f);
+
+            button5.BackColor = System.Drawing.Color.PaleVioletRed;
+            button5.FlatStyle = FlatStyle.Flat;
+            button5.FlatAppearance.BorderColor = Color.PaleVioletRed;
+            button5.FlatAppearance.BorderSize = 1;
+            button5.ForeColor = Color.White;
+            button5.Font = new Font("Microsoft Sans Serif", 12f);
+
         }
+
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -294,7 +338,8 @@ namespace Grupparbete_Insurance
                 //Knapp med click funktion, den första är för att få upp åldersstatistiken på vår chart.
                 Series ageIns = chart1.Series["Age Insured"];
                 Series ageNoIns = chart1.Series["Age Uninsured"];
-
+              
+                
 
                 //Då vi tidigare i koden satt dessa conditions till false så kommer dem till en början alltid inledas i ett läge där
                 //Grafen är tom. genom att klicka på knapparna kommer man sedan få fram önskad information.
@@ -313,7 +358,8 @@ namespace Grupparbete_Insurance
                     chart1.Series["Age Uninsured"].BorderWidth = 5;
                     chart1.ChartAreas[0].AxisY.Maximum = 25;
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
-
+                    chart1.Series["Age Insured"].Color = Color.DeepSkyBlue;
+                    chart1.Series["Age Uninsured"].Color = Color.Gray;
                 }
                 else if (ageIns.Enabled == true && ageNoIns.Enabled == false)
                 {
@@ -348,6 +394,9 @@ namespace Grupparbete_Insurance
                 // samma sak som förra knappen fast nytt område. (Utbildningsgrad).
                 Series educationIns = chart1.Series["Education Insured"];
                 Series educationNoIns = chart1.Series["Education Uninsured"];
+                
+
+
 
 
                 if (educationIns.Enabled == false && educationNoIns.Enabled == false)
@@ -362,6 +411,10 @@ namespace Grupparbete_Insurance
                     chart1.Series["Education Uninsured"].ChartType = SeriesChartType.Column;
                     chart1.ChartAreas[0].AxisY.Maximum = 35;
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
+                    chart1.Series["Education Insured"].Color = Color.OliveDrab;
+                    chart1.Series["Education Uninsured"].Color = Color.Gray;
+
+
                 }
                 else if (educationIns.Enabled == true && educationNoIns.Enabled == false)
                 {
@@ -402,7 +455,9 @@ namespace Grupparbete_Insurance
                         chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
                         chart1.ChartAreas[0].AxisY.Maximum = 15;
                         chart1.ChartAreas[0].AxisY.Minimum = 0;
-                    }
+                        chart1.Series["Occupation Insured"].Color = Color.Orange;
+                        chart1.Series["Occupation Uninsured"].Color = Color.Gray;
+                }
                     else if (occupationIns.Enabled == true && occupationNoIns.Enabled == false)
                     {
                         occupationIns.Enabled = false;
@@ -437,12 +492,19 @@ namespace Grupparbete_Insurance
                         martialIns.Enabled = true;
 
                         chart1.Titles.Add("Martial Status");
+
+
                         chart1.ChartAreas[0].AxisY.Title = "Amount in Percentage";
                         chart1.ChartAreas[0].AxisX.Title = "Marital Status";
 
                         chart1.ChartAreas[0].AxisY.Maximum = 40;
                         chart1.ChartAreas[0].AxisY.Minimum = 0;
-                    }
+
+                        chart1.Series["Marital Status Insured"].Color = Color.DarkViolet;
+                        chart1.Series["Marital Status Uninsured"].Color = Color.Gray;
+
+
+                }
                     else if (martialIns.Enabled == true && maritalNoIns.Enabled == false)
                     {
                         martialIns.Enabled = false;
@@ -480,6 +542,8 @@ namespace Grupparbete_Insurance
                     chart1.ChartAreas[0].AxisX.Title = "Insurances";
                     chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1; // Då vi hade många olika yrken behövde vi denna rad för att den 
                     //Skulle skriva ut "yrekstiteln" vid varje x punkt.
+                    chart1.Series["Insurance"].Color = Color.PaleVioletRed;
+                    
 
                     chart1.ChartAreas[0].AxisY.Maximum = 40; // Visa diagrammet upp till 40% på Y axeln.
                     chart1.ChartAreas[0].AxisY.Minimum = 0; // Börja på 0.
