@@ -83,6 +83,7 @@
             this.chart1.Size = new System.Drawing.Size(1368, 754);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
+            this.chart1.Location = new System.Drawing.Point(284, 200);
             // 
             // button1
             // 
@@ -97,6 +98,7 @@
             this.button1.Text = "Age";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.button1.Location = new System.Drawing.Point(36, 200);
             // 
             // button2
             // 
@@ -111,6 +113,7 @@
             this.button2.Text = "Education";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Location = new System.Drawing.Point(36, 300);
             // 
             // button3
             // 
@@ -122,6 +125,7 @@
             this.button3.Text = "Occupation";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Location = new System.Drawing.Point(36, 400);
             // 
             // button4
             // 
@@ -133,6 +137,7 @@
             this.button4.Text = "Marital Status";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Location = new System.Drawing.Point(36, 500);
             // 
             // button5
             // 
@@ -144,6 +149,7 @@
             this.button5.Text = "Insurance";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button5.Location = new System.Drawing.Point(36, 600);
             // 
             // panel1
             // 
@@ -186,6 +192,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Panel panel1;
+        
     }
 }
 

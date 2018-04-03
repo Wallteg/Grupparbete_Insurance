@@ -332,7 +332,13 @@ namespace Grupparbete_Insurance
                     //Inställningar för hur grafen ska se ut, såsom chart type, titel, namn på x/y axel, tjocklek på visaren och höjd på y axeln.
                     chart1.Series["Age Insured"].ChartType = SeriesChartType.Line;
                     chart1.Series["Age Uninsured"].ChartType = SeriesChartType.Line;
-                    chart1.Titles.Add("Variation of age with or without an insurance");
+                    chart1.Titles.Add(new Title(
+                        "Variation of age with or without an insurance",
+                        Docking.Top,
+                        new Font("Microsoft Sans Serif", 16, FontStyle.Bold),
+                        Color.Black
+                                                )
+                    );
                     chart1.ChartAreas[0].AxisY.Title = "Amount";
                     chart1.ChartAreas[0].AxisX.Title = "Age";
                     chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10);
@@ -384,7 +390,13 @@ namespace Grupparbete_Insurance
                 //Börjar vara tom, sen får man ny visning för varje knapptryck
                 educationIns.Enabled = true;
 
-                chart1.Titles.Add("Education");
+                chart1.Titles.Add(new Title(
+                        "Education",
+                        Docking.Top,
+                        new Font("Microsoft Sans Serif", 16, FontStyle.Bold),
+                        Color.Black
+                                                )
+                    );
                 chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                 chart1.ChartAreas[0].AxisX.Title = "Education level";
                 chart1.Series["Education"].ChartType = SeriesChartType.Column;
@@ -421,7 +433,13 @@ namespace Grupparbete_Insurance
                     tomGraf();
                     occupationIns.Enabled = true;
 
-                    chart1.Titles.Add("Occupation");
+                    chart1.Titles.Add(new Title(
+                        "Occupation",
+                        Docking.Top,
+                        new Font("Microsoft Sans Serif", 16, FontStyle.Bold),
+                        Color.Black
+                                                )
+                    );
                     chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                     chart1.ChartAreas[0].AxisX.Title = "Occupation";
                     chart1.Series["Occupation"].ChartType = SeriesChartType.Column;
@@ -457,9 +475,13 @@ namespace Grupparbete_Insurance
                     tomGraf();
                     martialIns.Enabled = true;
 
-                    chart1.Titles.Add("Martial Status");
-
-
+                    chart1.Titles.Add(new Title(
+                        "Marital Status",
+                        Docking.Top,
+                        new Font("Microsoft Sans Serif", 16, FontStyle.Bold),
+                        Color.Black
+                                                )
+                    );
                     chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                     chart1.ChartAreas[0].AxisX.Title = "Marital Status";
 
@@ -497,7 +519,13 @@ namespace Grupparbete_Insurance
                     tomGraf();
                     insurance.Enabled = true;
 
-                    chart1.Titles.Add("Insurance types");
+                    chart1.Titles.Add(new Title(
+                        "Insurance Types",
+                        Docking.Top,
+                        new Font("Microsoft Sans Serif", 16, FontStyle.Bold),
+                        Color.Black
+                                                )
+                    );
                     chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                     chart1.ChartAreas[0].AxisX.Title = "Insurances";
                     chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1; // Då vi hade många olika yrken behövde vi denna rad för att den 
