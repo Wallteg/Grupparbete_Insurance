@@ -26,7 +26,7 @@ namespace Grupparbete_Insurance
             SqlConnection conn = new SqlConnection();
 
             //Skapar en koppling till Databasen "Insurance" som finns på SQL server.
-            conn.ConnectionString = "Data Source=DESKTOP-J421FR9;Initial Catalog=Insurance;Integrated Security=True";
+            conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
 
             //Skapar en kundlista där vi sedan kan spara alla kunduppgifter om våra kunder.
             List<Customer> customerList = new List<Customer>();
@@ -62,7 +62,7 @@ namespace Grupparbete_Insurance
                 TimeSpan callEnd;
                 int carInsurance; //  1 true 0 false
 
-                //Vi initierar en while-loop för att kunna 
+                //Vi initierar en while-loop för att kunna hämta värden från SQL server in till våra variabler och sedan spara dessa i en lista.
                 while (myReader.Read())
                 {
 
@@ -176,7 +176,7 @@ namespace Grupparbete_Insurance
             maritalIns.Enabled = false;
 
             //Yrke
-            //Specifika counters
+            //Specifika counters för att kunna räkna ut procent av olika jobbtitlar
             decimal countStudent = customerList.Where(s => s.job == "student").Count();
             decimal countRetired = customerList.Where(s => s.job == "retired").Count();
             decimal countMan = customerList.Where(s => s.job == "management").Count();
@@ -189,6 +189,7 @@ namespace Grupparbete_Insurance
             decimal countEntre = customerList.Where(s => s.job == "entrepreneur").Count();
             decimal countHM = customerList.Where(s => s.job == "housemaid").Count();
 
+            //Räkna ut hur många som har bilförsäkring, baserat på jobbtitel.
             int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
             int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
             int management = jobs.Where(j => j.Key == "management").Sum(j => j.Count());
@@ -201,6 +202,7 @@ namespace Grupparbete_Insurance
             int entre = jobs.Where(j => j.Key == "entrepreneur").Sum(j => j.Count());
             int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
 
+            //Serie över jobb, med uträkning för varje x-värde (dvs. jobb) och ger svar med 1 decimal.
             Series occupationIns = chart1.Series["Occupation"]; // Hämtar serien från diagramet
             occupationIns.Points.AddXY("Student", decimal.Round((student / countStudent) * 100));
             occupationIns.Points.AddXY("Retired", decimal.Round((retired / countRetired)*100, 1));
@@ -226,7 +228,7 @@ namespace Grupparbete_Insurance
 
             //Vi gör en serie som vi kallar för ageIns (ålder Försäkrade), den ska läggas till i seriens Age Insured
             //raderna under så lägger vi till ett X-värde bestående av åldersspannet, därefter lägger vi till ett värde i Procent.
-            //Alla resultat visas med 2 decimaler
+            //Alla resultat visas med 1 decimal
             Series ageIns = chart1.Series["Age Insured"]; // Hämtar serien från diagramet
             ageIns.Points.AddXY("0 - 25", decimal.Round((countUppTill25 / counter) * 100, 1));
             ageIns.Points.AddXY("26 - 32", decimal.Round((count26Till32 / counter) * 100, 1));
@@ -246,9 +248,9 @@ namespace Grupparbete_Insurance
             ageNoIns.Points.AddXY("66+", decimal.Round((count66OchAldren / counter) * 100, 1));
             ageNoIns.Enabled = false; // Gör grafen ej synlig vid uppstart.
 
-            //Skapar en serie för utbildning
+            
            
-
+            //Serie för att kunna jämföra vilka försäkringar våra kunder har, alternativt, om dem är försäkrade överhuvudtaget inom banken.
             Series insurance = chart1.Series["Insurance"];
             insurance.Points.AddXY("Both", decimal.Round((homecar / counter) * 100, 1));
             insurance.Points.AddXY("Car", decimal.Round((noHomeCar / counter) * 100, 1));
