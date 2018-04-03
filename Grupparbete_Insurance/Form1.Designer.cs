@@ -53,7 +53,8 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(272, 52);
+            this.chart1.Location = new System.Drawing.Point(464, 200);
+            this.chart1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -79,7 +80,7 @@
             this.chart1.Series.Add(series4);
             this.chart1.Series.Add(series5);
             this.chart1.Series.Add(series6);
-            this.chart1.Size = new System.Drawing.Size(912, 490);
+            this.chart1.Size = new System.Drawing.Size(1368, 754);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -88,9 +89,10 @@
             this.button1.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.button1.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(36, 52);
+            this.button1.Location = new System.Drawing.Point(54, 80);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(188, 46);
+            this.button1.Size = new System.Drawing.Size(282, 71);
             this.button1.TabIndex = 1;
             this.button1.Text = "Age";
             this.button1.UseVisualStyleBackColor = false;
@@ -101,9 +103,10 @@
             this.button2.BackColor = System.Drawing.Color.OliveDrab;
             this.button2.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(36, 150);
+            this.button2.Location = new System.Drawing.Point(54, 231);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 46);
+            this.button2.Size = new System.Drawing.Size(282, 71);
             this.button2.TabIndex = 2;
             this.button2.Text = "Education";
             this.button2.UseVisualStyleBackColor = false;
@@ -111,9 +114,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(36, 249);
+            this.button3.Location = new System.Drawing.Point(54, 383);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(188, 46);
+            this.button3.Size = new System.Drawing.Size(282, 71);
             this.button3.TabIndex = 3;
             this.button3.Text = "Occupation";
             this.button3.UseVisualStyleBackColor = true;
@@ -121,9 +125,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(36, 351);
+            this.button4.Location = new System.Drawing.Point(54, 540);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(188, 46);
+            this.button4.Size = new System.Drawing.Size(282, 71);
             this.button4.TabIndex = 4;
             this.button4.Text = "Marital Status";
             this.button4.UseVisualStyleBackColor = true;
@@ -131,9 +136,10 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(36, 448);
+            this.button5.Location = new System.Drawing.Point(54, 689);
+            this.button5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(188, 46);
+            this.button5.Size = new System.Drawing.Size(282, 71);
             this.button5.TabIndex = 5;
             this.button5.Text = "Insurance";
             this.button5.UseVisualStyleBackColor = true;
@@ -149,19 +155,19 @@
             this.panel1.Controls.Add(this.button3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(274, 487);
+            this.panel1.Size = new System.Drawing.Size(411, 749);
             this.panel1.TabIndex = 6;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(913, 487);
+            this.ClientSize = new System.Drawing.Size(1812, 749);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chart1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);

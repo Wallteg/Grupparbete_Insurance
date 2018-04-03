@@ -26,7 +26,7 @@ namespace Grupparbete_Insurance
             SqlConnection conn = new SqlConnection();
 
             //Skapar en koppling till Databasen "Insurance" som finns på SQL server.
-            conn.ConnectionString = "Data Source=DESKTOP-0KMEDJA\\SQL2017;Initial Catalog=Insurance;Integrated Security=True";
+            conn.ConnectionString = "Data Source=DESKTOP-J421FR9;Initial Catalog=Insurance;Integrated Security=True";
 
             //Skapar en kundlista där vi sedan kan spara alla kunduppgifter om våra kunder.
             List<Customer> customerList = new List<Customer>();
@@ -138,9 +138,9 @@ namespace Grupparbete_Insurance
             int count66OchAldren = groups1.Where(gn => gn.Key >= 66).Sum(gn => gn.Count());
 
             //Samma princip fast här tar vi reda på antalet personer som har en viss utbildningsgrad.
-            int countPri = customerList.Where(ed => ed.education == "primary").Count();
-            int countSec = customerList.Where(ed => ed.education == "secondary").Count();
-            int countTer = customerList.Where(ed => ed.education == "tertiary").Count();
+            decimal countPri = customerList.Where(ed => ed.education == "primary").Count();
+            decimal countSec = customerList.Where(ed => ed.education == "secondary").Count();
+            decimal countTer = customerList.Where(ed => ed.education == "tertiary").Count();
           //  int countNA = customerList.Where(ed => ed.education == "NA").Count();
 
             int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
@@ -149,41 +149,41 @@ namespace Grupparbete_Insurance
           //  int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
 
             Series educationIns = chart1.Series["Education"]; // Hämtar serien från diagramet
-            educationIns.Points.AddXY("Tertiary", ((decimal)tertiary / countTer) * 100);
-            educationIns.Points.AddXY("Secondary", ((decimal)secondary / countSec) * 100);
-            educationIns.Points.AddXY("Primary", ((decimal)primary / countPri) * 100);
+            educationIns.Points.AddXY("Tertiary", decimal.Round((tertiary / countTer) * 100, 1));
+            educationIns.Points.AddXY("Secondary", decimal.Round((secondary / countSec) * 100, 1));
+            educationIns.Points.AddXY("Primary", decimal.Round((primary / countPri) * 100, 1));
 
             //  educationIns.Points.AddXY("NA", ((decimal)NA / countNA) * 100);
             educationIns.Enabled = false;
 
             //Civilstatus
-            int countMarried = customerList.Where(m => m.marital == "married").Count();
-            int countSingle = customerList.Where(m => m.marital == "single").Count();
-            int countDivorced = customerList.Where(m => m.marital == "divorced").Count();
+            decimal countMarried = customerList.Where(m => m.marital == "married").Count();
+            decimal countSingle = customerList.Where(m => m.marital == "single").Count();
+            decimal countDivorced = customerList.Where(m => m.marital == "divorced").Count();
 
             int married = Maritals.Where(m => m.Key == "married").Sum(m => m.Count());
             int single = Maritals.Where(m => m.Key == "single").Sum(m => m.Count());
             int divorced = Maritals.Where(m => m.Key == "divorced").Sum(m => m.Count());
 
             Series maritalIns = chart1.Series["Marital Status"]; // Hämtar serien från diagramet
-            maritalIns.Points.AddXY("single", ((decimal)single / countSingle) * 100);
-            maritalIns.Points.AddXY("divorced", ((decimal)divorced / countDivorced) * 100);
-            maritalIns.Points.AddXY("married", ((decimal)married / countMarried) * 100);
+            maritalIns.Points.AddXY("single", decimal.Round((single / countSingle) * 100, 1));
+            maritalIns.Points.AddXY("divorced", decimal.Round((divorced / countDivorced) * 100, 1));
+            maritalIns.Points.AddXY("married", decimal.Round((married / countMarried) * 100, 1));
             maritalIns.Enabled = false;
 
             //Yrke
             //Specifika counters
-            int countStudent = customerList.Where(s => s.job == "student").Count();
-            int countRetired = customerList.Where(s => s.job == "retired").Count();
-            int countMan = customerList.Where(s => s.job == "management").Count();
-            int countTech = customerList.Where(s => s.job == "technician").Count();
-            int countBlue = customerList.Where(s => s.job == "blue-collar").Count();
-            int countAdmin = customerList.Where(s => s.job == "admin.").Count();
-            int countServ = customerList.Where(s => s.job == "services").Count();
-            int countSE = customerList.Where(s => s.job == "self-employed").Count();
-            int countUE = customerList.Where(s => s.job == "unemployed").Count();
-            int countEntre = customerList.Where(s => s.job == "entrepreneur").Count();
-            int countHM = customerList.Where(s => s.job == "housemaid").Count();
+            decimal countStudent = customerList.Where(s => s.job == "student").Count();
+            decimal countRetired = customerList.Where(s => s.job == "retired").Count();
+            decimal countMan = customerList.Where(s => s.job == "management").Count();
+            decimal countTech = customerList.Where(s => s.job == "technician").Count();
+            decimal countBlue = customerList.Where(s => s.job == "blue-collar").Count();
+            decimal countAdmin = customerList.Where(s => s.job == "admin.").Count();
+            decimal countServ = customerList.Where(s => s.job == "services").Count();
+            decimal countSE = customerList.Where(s => s.job == "self-employed").Count();
+            decimal countUE = customerList.Where(s => s.job == "unemployed").Count();
+            decimal countEntre = customerList.Where(s => s.job == "entrepreneur").Count();
+            decimal countHM = customerList.Where(s => s.job == "housemaid").Count();
 
             int student = jobs.Where(j => j.Key == "student").Sum(j => j.Count());
             int retired = jobs.Where(j => j.Key == "retired").Sum(j => j.Count());
@@ -198,17 +198,17 @@ namespace Grupparbete_Insurance
             int housemaid = jobs.Where(j => j.Key == "housemaid").Sum(j => j.Count());
 
             Series occupationIns = chart1.Series["Occupation"]; // Hämtar serien från diagramet
-            occupationIns.Points.AddXY("Student", ((decimal)student / countStudent) * 100);
-            occupationIns.Points.AddXY("Retired", ((decimal)retired / countRetired) * 100);
-            occupationIns.Points.AddXY("unemployed", ((decimal)unemployed / countUE) * 100);
-            occupationIns.Points.AddXY("management", ((decimal)management / countMan) * 100);
-            occupationIns.Points.AddXY("admin", ((decimal)admin / countAdmin) * 100);
-            occupationIns.Points.AddXY("self-employed", ((decimal)self / countSE) * 100);
-            occupationIns.Points.AddXY("technician", ((decimal)tech / countTech) * 100);
-            occupationIns.Points.AddXY("housemaid", ((decimal)housemaid / countHM) * 100);
-            occupationIns.Points.AddXY("services", ((decimal)serv / countServ) * 100);
-            occupationIns.Points.AddXY("entrepreneur", ((decimal)entre / countEntre) * 100);
-            occupationIns.Points.AddXY("blue-collar", ((decimal)blue / countBlue) * 100);
+            occupationIns.Points.AddXY("Student", decimal.Round((student / countStudent) * 100));
+            occupationIns.Points.AddXY("Retired", decimal.Round((retired / countRetired)*100, 1));
+            occupationIns.Points.AddXY("unemployed", decimal.Round((unemployed / countUE)*100, 1));
+            occupationIns.Points.AddXY("management", decimal.Round((management / countMan)*100, 1));
+            occupationIns.Points.AddXY("admin", decimal.Round((admin / countAdmin)*100, 1));
+            occupationIns.Points.AddXY("self-employed", decimal.Round((self / countSE)*100, 1));
+            occupationIns.Points.AddXY("technician", decimal.Round((tech / countTech)*100, 1));
+            occupationIns.Points.AddXY("housemaid", decimal.Round((housemaid / countHM)*100, 1));
+            occupationIns.Points.AddXY("services", decimal.Round((serv / countServ)*100, 1));
+            occupationIns.Points.AddXY("entrepreneur", decimal.Round((entre / countEntre)*100, 1));
+            occupationIns.Points.AddXY("blue-collar", decimal.Round((blue / countBlue)*100, 1));
             occupationIns.Enabled = false;
 
             // Vi ville bland annat kunna se om det var vanligt att samla sina försäkringar på samma ställe inom banken
@@ -340,6 +340,10 @@ namespace Grupparbete_Insurance
                     chart1.Series["Age Uninsured"].Color = Color.Gray;
                     chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
                     chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
+                    chart1.Series["Age Insured"].IsValueShownAsLabel = true;
+                    chart1.Series["Age Uninsured"].IsValueShownAsLabel = true;
+                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "#.##";
+                    chart1.ChartAreas[0].AxisY.LabelStyle.Format = "#.##";
 
 
                 }
@@ -384,8 +388,15 @@ namespace Grupparbete_Insurance
                 chart1.ChartAreas[0].AxisY.Maximum = 100;
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
                 chart1.Series["Education"].Color = Color.OliveDrab;
-
-
+                
+                //Tar bort GridLine
+                chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
+                chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
+                //Lägger till värdet på stapeln och rundar av till 2 decimaler 
+                chart1.Series["Education"].IsValueShownAsLabel = true;
+                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "#,##";
+ 
+   
             }
             else if (educationIns.Enabled == true)
             {
@@ -416,6 +427,12 @@ namespace Grupparbete_Insurance
                     chart1.ChartAreas[0].AxisY.Maximum = 100;
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
                     chart1.Series["Occupation"].Color = Color.Orange;
+                    //Tar bort GridLine
+                    chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
+                    chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
+                    //Lägger till värdet på stapeln och rundar av till två decimaler 
+                    chart1.Series["Occupation"].IsValueShownAsLabel = true;
+                    chart1.ChartAreas[0].AxisY.LabelStyle.Format = "#.##";
                 }
                 else if (occupationIns.Enabled == true)
                 {
@@ -449,6 +466,13 @@ namespace Grupparbete_Insurance
 
                     chart1.Series["Marital Status"].Color = Color.DarkViolet;
 
+                    //Tar bort GridLine
+                    chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
+                    chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
+
+                    chart1.Series["Marital Status"].IsValueShownAsLabel = true;
+                    chart1.ChartAreas[0].AxisY.LabelStyle.Format = "#.##";
+
 
                 }
                 else if (martialIns.Enabled == true)
@@ -481,6 +505,14 @@ namespace Grupparbete_Insurance
 
                     chart1.ChartAreas[0].AxisY.Maximum = 40; // Visa diagrammet upp till 40% på Y axeln.
                     chart1.ChartAreas[0].AxisY.Minimum = 0; // Börja på 0.
+                    //Tar bort GridLine
+                    chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
+                    chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
+
+                    chart1.Series["Insurance"].IsValueShownAsLabel = true;
+                    chart1.ChartAreas[0].AxisY.LabelStyle.Format = "#.##";
+
+
                 }
                 else if (insurance.Enabled == true)
                 {
