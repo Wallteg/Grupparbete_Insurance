@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using System.Data.SqlClient; // Koppla till SQL 
 using System.Windows.Forms.DataVisualization.Charting; //API för att kunna plotta grafer 
 
 namespace Grupparbete_Insurance
@@ -38,9 +38,8 @@ namespace Grupparbete_Insurance
                 //Vi vill komma åt tabellen Car_Insurance som innehåller vår data.
                 SqlCommand myQuery = new SqlCommand("SELECT * FROM Car_Insurance;", connection: conn);
 
+                //myReader är en variabel vi skapar som sparar in informationen från SQL 
                 SqlDataReader myReader = myQuery.ExecuteReader();
-
-
 
                 //Vi inleder med att deklarera våra olika variabler som vi har att tillgå från SQL server
                 int id;
@@ -63,7 +62,7 @@ namespace Grupparbete_Insurance
                 TimeSpan callEnd;
                 int carInsurance; //  1 true 0 false
 
-
+                //Vi initierar en while-loop för att kunna 
                 while (myReader.Read())
                 {
 
@@ -89,6 +88,7 @@ namespace Grupparbete_Insurance
                     carInsurance = (int)myReader["carinsurance"];
 
                     //Koppling till vår klass "Customer", varje kund blir ett objekt med dessa olika egenskaperna.
+                    //Instansierar ett objekt av typen Customer mha konstruktorn
                     Customer customer = new Customer(id, age, job, marital, education, credit, balance,
                         homeInsurance, carLoan, communication, lastContactDay, lastContactMonth, noOfContacts,
                         daysPassed, prevAttemts, outcome, callStart, callEnd, carInsurance);
@@ -109,6 +109,7 @@ namespace Grupparbete_Insurance
 
             //För vår visualisering vill vi kunna särskilja personer som har försäkring och dem som inte har försäkring
             // Vi har olika intressepunkter och olika områden vi vill undersöka, såsom, Ålder, Utbildning, Civilstatus, Jobb, osv.
+            //g.key - är en nyckel som sparar åldergrupperingen i en nyckel som vi sedan återanvänder i koden framöver. 
             var groups = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.age).OrderBy(g => g.Key).ToList();
             var groups1 = customerList.Where(c => c.carInsurance == 0).GroupBy(cn => cn.age).OrderBy(gn => gn.Key).ToList();
             var edu = customerList.Where(c => c.carInsurance == 1).GroupBy(c => c.education).OrderBy(ed => ed.Key).ToList();
@@ -122,6 +123,7 @@ namespace Grupparbete_Insurance
 
             //vi vill kunna se åldergrupper på våra kunder för att kunna veta vart vi ska lägga största fokus,
             // För att kunna göra det använder vi denna för att kunna lägga ihop ett samlat resultat för dem som är inom samma åldersspann.
+           
             int countUppTill25 = groups.Where(g => g.Key <= 25).Sum(g => g.Count());
             int count26Till32 = groups.Where(g => g.Key >= 26 && g.Key <= 32).Sum(g => g.Count());
             int count33Till40 = groups.Where(g => g.Key >= 33 && g.Key <= 40).Sum(g => g.Count());
@@ -138,25 +140,27 @@ namespace Grupparbete_Insurance
             int count66OchAldren = groups1.Where(gn => gn.Key >= 66).Sum(gn => gn.Count());
 
             //Samma princip fast här tar vi reda på antalet personer som har en viss utbildningsgrad.
+            //Denna räknar upp
             decimal countPri = customerList.Where(ed => ed.education == "primary").Count();
             decimal countSec = customerList.Where(ed => ed.education == "secondary").Count();
             decimal countTer = customerList.Where(ed => ed.education == "tertiary").Count();
-          //  int countNA = customerList.Where(ed => ed.education == "NA").Count();
+            //int countNA = customerList.Where(ed => ed.education == "NA").Count();
 
+            //Denna del summerar personer med de olika utbildningsnivåerna. 
             int primary = edu.Where(ed => ed.Key == "primary").Sum(ed => ed.Count());
             int secondary = edu.Where(ed => ed.Key == "secondary").Sum(ed => ed.Count());
             int tertiary = edu.Where(ed => ed.Key == "tertiary").Sum(ed => ed.Count());
-          //  int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
+            //int NA = edu.Where(ed => ed.Key == "NA").Sum(ed => ed.Count());
 
+            //Denna del lägger in punkterna till grafen (x- och yvärden per grupp) 
             Series educationIns = chart1.Series["Education"]; // Hämtar serien från diagramet
             educationIns.Points.AddXY("Tertiary", decimal.Round((tertiary / countTer) * 100, 1));
             educationIns.Points.AddXY("Secondary", decimal.Round((secondary / countSec) * 100, 1));
             educationIns.Points.AddXY("Primary", decimal.Round((primary / countPri) * 100, 1));
-
             //  educationIns.Points.AddXY("NA", ((decimal)NA / countNA) * 100);
             educationIns.Enabled = false;
 
-            //Civilstatus
+            //Civilstatus räknar, summmer och lägger till punkterna till grafen. 
             decimal countMarried = customerList.Where(m => m.marital == "married").Count();
             decimal countSingle = customerList.Where(m => m.marital == "single").Count();
             decimal countDivorced = customerList.Where(m => m.marital == "divorced").Count();
@@ -211,49 +215,48 @@ namespace Grupparbete_Insurance
             occupationIns.Points.AddXY("blue-collar", decimal.Round((blue / countBlue)*100, 1));
             occupationIns.Enabled = false;
 
-            // Vi ville bland annat kunna se om det var vanligt att samla sina försäkringar på samma ställe inom banken
+            // Vi ville bland annat kunna se om det var vanligt att samla sina försäkringar på samma ställe
             // Denna del hjälper oss att få fram antalet kunder som har båda försäkringarna, endast bil, endast hem eller saknar försäkring inom banken
-            int homecar = home.Where(h => h.Key == 1).Sum(h => h.Count());
-            int noHomeCar = home.Where(h => h.Key == 0).Sum(h => h.Count());
+            int homecar = home.Where(h => h.Key == 1).Sum(h => h.Count()); // de som har hem och bil 
+            int noHomeCar = home.Where(h => h.Key == 0).Sum(h => h.Count()); // de som inte har hem har hem och bil 
 
-            int homeNoCar = home1.Where(h => h.Key == 1).Sum(h => h.Count());
-            int noHomeNoCar = home1.Where(h => h.Key == 0).Sum(h => h.Count());
+            int homeNoCar = home1.Where(h => h.Key == 1).Sum(h => h.Count()); //de som har hem men inte bil
+            int noHomeNoCar = home1.Where(h => h.Key == 0).Sum(h => h.Count()); //de som varken hem eller bil 
 
 
             //Vi gör en serie som vi kallar för ageIns (ålder Försäkrade), den ska läggas till i seriens Age Insured
             //raderna under så lägger vi till ett X-värde bestående av åldersspannet, därefter lägger vi till ett värde i Procent.
             //Alla resultat visas med 2 decimaler
             Series ageIns = chart1.Series["Age Insured"]; // Hämtar serien från diagramet
-            ageIns.Points.AddXY("0 - 25", decimal.Round((countUppTill25 / counter) * 100, 2));
-            ageIns.Points.AddXY("26 - 32", decimal.Round((count26Till32 / counter) * 100, 2));
-            ageIns.Points.AddXY("33 - 40", decimal.Round((count33Till40 / counter) * 100, 2));
-            ageIns.Points.AddXY("41 - 50", decimal.Round(count41Till50 / counter * 100, 2));
-            ageIns.Points.AddXY("51 - 65", decimal.Round((count51Till65 / counter) * 100, 2));
-            ageIns.Points.AddXY("66+", decimal.Round((count66OchAldre / counter) * 100, 2));
+            ageIns.Points.AddXY("0 - 25", decimal.Round((countUppTill25 / counter) * 100, 1));
+            ageIns.Points.AddXY("26 - 32", decimal.Round((count26Till32 / counter) * 100, 1));
+            ageIns.Points.AddXY("33 - 40", decimal.Round((count33Till40 / counter) * 100, 1));
+            ageIns.Points.AddXY("41 - 50", decimal.Round(count41Till50 / counter * 100, 1));
+            ageIns.Points.AddXY("51 - 65", decimal.Round((count51Till65 / counter) * 100, 1));
+            ageIns.Points.AddXY("66+", decimal.Round((count66OchAldre / counter) * 100, 1));
             ageIns.Enabled = false; // Vi gör grafen ej synlig som default, för att med hjälp av knappar senare kunna visa önskad chart.
 
             // Serie för ålderspann fast för kunder som saknar försäkring.
             Series ageNoIns = chart1.Series["Age Uninsured"]; // Hämtar serien från diagramet
-            ageNoIns.Points.AddXY("0 - 25", decimal.Round((countUppTill25n / counter) * 100, 2));
-            ageNoIns.Points.AddXY("26 - 32", decimal.Round((count26Till32n / counter) * 100, 2));
-            ageNoIns.Points.AddXY("33 - 40", decimal.Round((count33Till40n / counter) * 100, 2));
-            ageNoIns.Points.AddXY("41 - 50", decimal.Round((count41Till50n / counter) * 100, 2));
-            ageNoIns.Points.AddXY("51 - 65", decimal.Round((count51Till65n / counter) * 100, 2));
-            ageNoIns.Points.AddXY("66+", decimal.Round((count66OchAldren / counter) * 100, 2));
+            ageNoIns.Points.AddXY("0 - 25", decimal.Round((countUppTill25n / counter) * 100, 1));
+            ageNoIns.Points.AddXY("26 - 32", decimal.Round((count26Till32n / counter) * 100, 1));
+            ageNoIns.Points.AddXY("33 - 40", decimal.Round((count33Till40n / counter) * 100, 1));
+            ageNoIns.Points.AddXY("41 - 50", decimal.Round((count41Till50n / counter) * 100, 1));
+            ageNoIns.Points.AddXY("51 - 65", decimal.Round((count51Till65n / counter) * 100, 1));
+            ageNoIns.Points.AddXY("66+", decimal.Round((count66OchAldren / counter) * 100, 1));
             ageNoIns.Enabled = false; // Gör grafen ej synlig vid uppstart.
 
             //Skapar en serie för utbildning
            
 
             Series insurance = chart1.Series["Insurance"];
-            insurance.Points.AddXY("Both", decimal.Round((homecar / counter) * 100, 2));
-            insurance.Points.AddXY("Car", decimal.Round((noHomeCar / counter) * 100, 2));
-            insurance.Points.AddXY("Home", decimal.Round((homeNoCar / counter) * 100, 2));
-            insurance.Points.AddXY("No Insurance", decimal.Round((noHomeNoCar / counter) * 100, 2));
+            insurance.Points.AddXY("Both", decimal.Round((homecar / counter) * 100, 1));
+            insurance.Points.AddXY("Car", decimal.Round((noHomeCar / counter) * 100, 1));
+            insurance.Points.AddXY("Home", decimal.Round((homeNoCar / counter) * 100, 1));
+            insurance.Points.AddXY("No Insurance", decimal.Round((noHomeNoCar / counter) * 100, 1));
             insurance.Enabled = false;
 
             //Designinställningar
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             WindowState = FormWindowState.Maximized;
 
@@ -263,7 +266,6 @@ namespace Grupparbete_Insurance
             button1.FlatAppearance.BorderSize = 1;
             button1.ForeColor = Color.White;
             button1.Font = new Font("Microsoft Sans Serif", 12f);
-
 
             button2.BackColor = System.Drawing.Color.OliveDrab;
             button2.FlatStyle = FlatStyle.Flat;
@@ -292,7 +294,6 @@ namespace Grupparbete_Insurance
             button5.FlatAppearance.BorderSize = 1;
             button5.ForeColor = Color.White;
             button5.Font = new Font("Microsoft Sans Serif", 12f);
-
         }
 
         //Metod för att först tömma graferna på innehåll
@@ -330,8 +331,11 @@ namespace Grupparbete_Insurance
                     chart1.Series["Age Insured"].ChartType = SeriesChartType.Line;
                     chart1.Series["Age Uninsured"].ChartType = SeriesChartType.Line;
                     chart1.Titles.Add("Variation of age with or without an insurance");
-                    chart1.ChartAreas[0].AxisY.Title = "Amount of Persons";
+                    chart1.ChartAreas[0].AxisY.Title = "Amount";
                     chart1.ChartAreas[0].AxisX.Title = "Age";
+                    chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10);
+                    chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10);
+                   // FIXA STORLEKEN PÅ TITELN!!! chart1.Titles["Variation of age with or without and insurance"].Font = new Font("Microsoft Sans Serif", 15f);
                     chart1.Series["Age Insured"].BorderWidth = 5;
                     chart1.Series["Age Uninsured"].BorderWidth = 5;
                     chart1.ChartAreas[0].AxisY.Maximum = 25;
@@ -342,9 +346,6 @@ namespace Grupparbete_Insurance
                     chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
                     chart1.Series["Age Insured"].IsValueShownAsLabel = true;
                     chart1.Series["Age Uninsured"].IsValueShownAsLabel = true;
-                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "#.##";
-                    chart1.ChartAreas[0].AxisY.LabelStyle.Format = "#.##";
-
 
                 }
                 else if (ageIns.Enabled == true && ageNoIns.Enabled == false)
@@ -388,7 +389,6 @@ namespace Grupparbete_Insurance
                 chart1.ChartAreas[0].AxisY.Maximum = 100;
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
                 chart1.Series["Education"].Color = Color.OliveDrab;
-                
                 //Tar bort GridLine
                 chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
                 chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
