@@ -341,8 +341,8 @@ namespace Grupparbete_Insurance
                     );
                     chart1.ChartAreas[0].AxisY.Title = "Amount";
                     chart1.ChartAreas[0].AxisX.Title = "Age";
-                    chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10);
-                    chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10);
+                    chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
+                    chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
                    // FIXA STORLEKEN PÅ TITELN!!! chart1.Titles["Variation of age with or without and insurance"].Font = new Font("Microsoft Sans Serif", 15f);
                     chart1.Series["Age Insured"].BorderWidth = 5;
                     chart1.Series["Age Uninsured"].BorderWidth = 5;
@@ -403,6 +403,8 @@ namespace Grupparbete_Insurance
                 chart1.ChartAreas[0].AxisY.Maximum = 100;
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
                 chart1.Series["Education"].Color = Color.OliveDrab;
+                chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
+                chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
                 //Tar bort GridLine
                 chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
                 chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
@@ -447,6 +449,8 @@ namespace Grupparbete_Insurance
                     chart1.ChartAreas[0].AxisY.Maximum = 100;
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
                     chart1.Series["Occupation"].Color = Color.Orange;
+                    chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
+                    chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
                     //Tar bort GridLine
                     chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
                     chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 0;
@@ -489,6 +493,8 @@ namespace Grupparbete_Insurance
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
 
                     chart1.Series["Marital Status"].Color = Color.DarkViolet;
+                    chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
+                    chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
 
                     //Tar bort GridLine
                     chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
@@ -528,6 +534,8 @@ namespace Grupparbete_Insurance
                     );
                     chart1.ChartAreas[0].AxisY.Title = "Amount in %";
                     chart1.ChartAreas[0].AxisX.Title = "Insurances";
+                    chart1.ChartAreas[0].AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
+                    chart1.ChartAreas[0].AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12);
                     chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1; // Då vi hade många olika yrken behövde vi denna rad för att den 
                     //Skulle skriva ut "yrkestiteln" vid varje x punkt.
                     chart1.Series["Insurance"].Color = Color.PaleVioletRed;
